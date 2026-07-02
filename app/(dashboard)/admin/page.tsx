@@ -26,7 +26,7 @@ export default async function AdminOverviewPage() {
   ]
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Overview</p>
       <h1 className="display mb-8 text-2xl text-ink">Your property</h1>
 

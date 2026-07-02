@@ -21,7 +21,7 @@ export default async function StaffTodayPage() {
     : { data: null }
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Today</p>
       <h1 className="display mb-8 text-2xl text-ink">
         {profile?.full_name ? `Welcome back, ${profile.full_name}` : 'Welcome'}

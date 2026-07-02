@@ -16,7 +16,7 @@ export default async function AdminPropertyPage() {
     : { data: null }
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Property</p>
       <h1 className="display mb-10 text-2xl text-ink">Settings</h1>
 

@@ -15,7 +15,7 @@ export default async function StaffCompetenciesPage() {
     : { data: null }
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">My standards</p>
       <h1 className="display mb-8 text-2xl text-ink">Competencies</h1>
 

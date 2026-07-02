@@ -15,7 +15,7 @@ export default async function StaffCertificatesPage() {
     : { data: null }
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Certificates</p>
       <h1 className="display mb-8 text-2xl text-ink">Your certificates</h1>
 

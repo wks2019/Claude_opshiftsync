@@ -10,7 +10,7 @@ export default async function StaffCoursesPage() {
     .order('title', { ascending: true })
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Courses</p>
       <h1 className="display mb-8 text-2xl text-ink">Learning</h1>
 

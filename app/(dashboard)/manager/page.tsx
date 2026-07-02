@@ -6,7 +6,7 @@ export default async function ManagerTeamPage() {
   const { data: rollup, error } = await supabase.rpc('get_team_analytics')
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Team</p>
       <h1 className="display mb-8 text-2xl text-ink">Standing</h1>
 

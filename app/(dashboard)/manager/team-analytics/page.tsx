@@ -22,7 +22,7 @@ export default async function ManagerAnalyticsPage() {
   ]
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Analytics</p>
       <h1 className="display mb-10 text-2xl text-ink">Team-wide standing</h1>
 

@@ -14,7 +14,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const PRIMARY_BASE =
-  'border border-ink text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40'
+  'border border-ink text-ink transition hover:bg-ink hover:text-paper disabled:opacity-40 motion-safe:active:scale-[0.98]'
 
 const SUBTLE_TONE: Record<ButtonTone, string> = {
   ink: 'border-brass text-ink transition-colors hover:text-brass',

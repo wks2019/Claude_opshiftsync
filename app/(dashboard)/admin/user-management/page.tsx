@@ -10,7 +10,7 @@ export default async function AdminUserManagementPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">People</p>
       <h1 className="display mb-10 text-2xl text-ink">Your team</h1>
 

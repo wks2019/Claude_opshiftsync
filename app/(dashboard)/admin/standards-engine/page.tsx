@@ -11,7 +11,7 @@ export default async function AdminStandardsPage() {
     .order('updated_at', { ascending: false })
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Standards</p>
       <h1 className="display mb-10 text-2xl text-ink">SOP library</h1>
 

@@ -13,7 +13,7 @@ export default async function ManagerReportsPage() {
     .limit(50)
 
   return (
-    <section>
+    <section className="fade-in">
       <p className="eyebrow mb-2">Reports</p>
       <h1 className="display mb-8 text-2xl text-ink">Completed sessions</h1>
 

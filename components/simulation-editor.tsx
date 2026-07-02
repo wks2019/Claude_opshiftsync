@@ -199,7 +199,7 @@ export function SimulationEditor({
         <p className="eyebrow mb-4">States</p>
         {states.length === 0 && <p className="mb-6 text-stone">No states yet.</p>}
         {states.map((s) => (
-          <Card key={s.id} className="mb-6">
+          <Card key={s.id} className="fade-in mb-6">
             <div className="flex items-baseline justify-between gap-4">
               <p className="text-ink-soft">{s.name}</p>
               <span className="eyebrow shrink-0">
