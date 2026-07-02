@@ -77,6 +77,42 @@ export type Database = {
           },
         ]
       }
+      standards: {
+        Row: {
+          id: string
+          name: string
+          is_global: boolean
+          hotel_group_id: string | null
+        }
+        Insert: Partial<Database['public']['Tables']['standards']['Row']> & {
+          name: string
+        }
+        Update: Partial<Database['public']['Tables']['standards']['Row']>
+        Relationships: []
+      }
+      standard_weights: {
+        Row: {
+          id: string
+          hotel_group_id: string
+          standard_id: string
+          weight: number
+        }
+        Insert: Partial<Database['public']['Tables']['standard_weights']['Row']> & {
+          hotel_group_id: string
+          standard_id: string
+          weight: number
+        }
+        Update: Partial<Database['public']['Tables']['standard_weights']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'standard_weights_standard_id_fkey'
+            columns: ['standard_id']
+            isOneToOne: false
+            referencedRelation: 'standards'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       hotel_groups: {
         Row: {
           id: string
