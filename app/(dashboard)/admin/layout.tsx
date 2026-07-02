@@ -13,7 +13,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <DashboardShell role="administrator" propertyName="Chosen Workflow" currentPath="/admin">
+    <DashboardShell role="administrator" propertyName="Chosen Workflow">
       {children}
     </DashboardShell>
   )

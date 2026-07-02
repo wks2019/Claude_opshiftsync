@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/services/supabase/server'
 
@@ -29,6 +30,12 @@ export default async function SopDetailPage({ params }: PageProps) {
 
   return (
     <section className="max-w-xl">
+      <Link
+        href="/admin/standards-engine"
+        className="eyebrow mb-6 inline-block text-stone transition-colors hover:text-ink"
+      >
+        ← Standards
+      </Link>
       <p className="eyebrow mb-2">SOP</p>
       <h1 className="display mb-2 text-2xl text-ink">{sop.title}</h1>
       {version && <p className="eyebrow mb-10 text-stone">Version {version.version_number}</p>}

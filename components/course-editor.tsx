@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/toast-provider'
 
 interface CourseEditorProps {
   courseId: string
@@ -23,6 +24,7 @@ export function CourseEditor({
   initialStatus,
 }: CourseEditorProps) {
   const router = useRouter()
+  const { showToast } = useToast()
   const [title, setTitle] = useState(initialTitle)
   const [description, setDescription] = useState(initialDescription)
   const [status, setStatus] = useState(initialStatus)
@@ -42,7 +44,10 @@ export function CourseEditor({
       if (!response.ok || payload.error) {
         throw new Error(payload.error?.message ?? 'Save failed')
       }
-      if (patch.status) setStatus(patch.status as typeof status)
+      if (patch.status) {
+        setStatus(patch.status as typeof status)
+        showToast(`Course ${(STATUS_LABEL[patch.status] ?? patch.status).toLowerCase()}.`)
+      }
       router.refresh()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Save failed')

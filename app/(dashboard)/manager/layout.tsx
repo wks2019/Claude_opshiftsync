@@ -13,7 +13,7 @@ export default async function ManagerLayout({ children }: { children: React.Reac
   }
 
   return (
-    <DashboardShell role="manager" propertyName="Chosen Workflow" currentPath="/manager">
+    <DashboardShell role="manager" propertyName="Chosen Workflow">
       {children}
     </DashboardShell>
   )

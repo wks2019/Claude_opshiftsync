@@ -2,9 +2,11 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/toast-provider'
 
 export function CreateSopForm() {
   const router = useRouter()
+  const { showToast } = useToast()
   const [title, setTitle] = useState('')
   const [stepsText, setStepsText] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -38,6 +40,7 @@ export function CreateSopForm() {
       setTitle('')
       setStepsText('')
       router.refresh()
+      showToast('SOP created.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not create the SOP')
     } finally {

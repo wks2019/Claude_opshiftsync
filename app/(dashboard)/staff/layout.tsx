@@ -13,7 +13,7 @@ export default async function StaffLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <DashboardShell role="staff" propertyName="Chosen Workflow" currentPath="/staff">
+    <DashboardShell role="staff" propertyName="Chosen Workflow">
       {children}
     </DashboardShell>
   )

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/toast-provider'
 
 interface StateRow {
   id: string
@@ -32,6 +33,7 @@ export function SimulationEditor({
   choices,
 }: SimulationEditorProps) {
   const router = useRouter()
+  const { showToast } = useToast()
   const [error, setError] = useState<string | null>(null)
   const [isBusy, setIsBusy] = useState(false)
 
@@ -81,6 +83,7 @@ export function SimulationEditor({
       setGuestMood('neutral')
       setIsTerminal(false)
       router.refresh()
+      showToast('State added.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not add state')
     } finally {
@@ -107,6 +110,7 @@ export function SimulationEditor({
       setChoiceLabel('')
       setChoiceDialogue('')
       router.refresh()
+      showToast('Choice added.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not add choice')
     } finally {
@@ -120,6 +124,7 @@ export function SimulationEditor({
     try {
       await callApi(`/api/v1/admin/simulations/${simulationId}`, 'PATCH', { entryStateId: newEntryStateId })
       router.refresh()
+      showToast('Entry state set.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not set entry state')
     } finally {
@@ -133,6 +138,7 @@ export function SimulationEditor({
     try {
       await callApi(`/api/v1/admin/simulations/${simulationId}`, 'PATCH', { status: newStatus })
       router.refresh()
+      showToast(`Simulation ${newStatus}.`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not update status')
     } finally {

@@ -1,5 +1,10 @@
+'use client'
+
 import Link from 'next/link'
-import type { ReactNode } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useState, type ReactNode } from 'react'
+import { logout } from '@/services/auth/session-actions'
+import { useToast } from '@/components/toast-provider'
 
 type AppRole = 'staff' | 'manager' | 'administrator'
 
@@ -33,7 +38,6 @@ const NAV: Record<AppRole, NavItem[]> = {
 interface DashboardShellProps {
   role: AppRole
   propertyName: string
-  currentPath: string
   children: ReactNode
 }
 
@@ -42,8 +46,24 @@ interface DashboardShellProps {
  * the property name (display face, the one per screen) and role nav.
  * Content sits on a wide, quiet page: whitespace does the luxury work.
  */
-export function DashboardShell({ role, propertyName, currentPath, children }: DashboardShellProps) {
+export function DashboardShell({ role, propertyName, children }: DashboardShellProps) {
   const navItems = NAV[role]
+  const currentPath = usePathname()
+  const router = useRouter()
+  const { showToast } = useToast()
+  const [isSigningOut, setIsSigningOut] = useState(false)
+
+  async function handleSignOut() {
+    setIsSigningOut(true)
+    try {
+      await logout()
+      router.push('/login')
+      router.refresh()
+    } catch {
+      showToast('Could not sign out. Try again.', 'error')
+      setIsSigningOut(false)
+    }
+  }
 
   return (
     <div className="min-h-dvh bg-paper">
@@ -53,28 +73,39 @@ export function DashboardShell({ role, propertyName, currentPath, children }: Da
             {propertyName}
           </Link>
 
-          <nav aria-label="Primary">
-            <ul className="flex items-baseline gap-7">
-              {navItems.map(({ href, label }) => {
-                const isActive = currentPath === href
-                return (
-                  <li key={href}>
-                    <Link
-                      href={href}
-                      aria-current={isActive ? 'page' : undefined}
-                      className={
-                        isActive
-                          ? 'border-b border-brass pb-1 text-ink'
-                          : 'pb-1 text-stone transition-colors hover:text-ink'
-                      }
-                    >
-                      {label}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-          </nav>
+          <div className="flex items-baseline gap-7">
+            <nav aria-label="Primary">
+              <ul className="flex items-baseline gap-7">
+                {navItems.map(({ href, label }) => {
+                  const isActive = currentPath === href
+                  return (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={
+                          isActive
+                            ? 'border-b border-brass pb-1 text-ink'
+                            : 'pb-1 text-stone transition-colors hover:text-ink'
+                        }
+                      >
+                        {label}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </nav>
+
+            <button
+              type="button"
+              onClick={handleSignOut}
+              disabled={isSigningOut}
+              className="eyebrow text-stone transition-colors hover:text-claret disabled:opacity-40"
+            >
+              {isSigningOut ? 'Signing out…' : 'Sign out'}
+            </button>
+          </div>
         </div>
       </header>
 

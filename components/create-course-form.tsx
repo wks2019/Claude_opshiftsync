@@ -2,9 +2,11 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/toast-provider'
 
 export function CreateCourseForm() {
   const router = useRouter()
+  const { showToast } = useToast()
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -28,6 +30,7 @@ export function CreateCourseForm() {
       setTitle('')
       setDescription('')
       router.refresh()
+      showToast('Course created as a draft.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not create the course')
     } finally {

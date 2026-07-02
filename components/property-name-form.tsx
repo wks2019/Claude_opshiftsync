@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/toast-provider'
 
 export function PropertyNameForm({ initialName }: { initialName: string }) {
   const router = useRouter()
+  const { showToast } = useToast()
   const [name, setName] = useState(initialName)
   const [error, setError] = useState<string | null>(null)
   const [isSaving, setIsSaving] = useState(false)
@@ -24,6 +26,7 @@ export function PropertyNameForm({ initialName }: { initialName: string }) {
         throw new Error(payload.error?.message ?? 'Could not save')
       }
       router.refresh()
+      showToast('Property name saved.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not save')
     } finally {

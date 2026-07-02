@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/components/toast-provider'
 
 const TYPES = [
   ['in_room_dining', 'In-Room Dining'],
@@ -15,6 +16,7 @@ const TYPES = [
 
 export function CreateSimulationForm() {
   const router = useRouter()
+  const { showToast } = useToast()
   const [title, setTitle] = useState('')
   const [type, setType] = useState<(typeof TYPES)[number][0]>('in_room_dining')
   const [difficulty, setDifficulty] = useState<'standard' | 'advanced' | 'vip'>('standard')
@@ -35,6 +37,7 @@ export function CreateSimulationForm() {
       if (!response.ok || payload.error) {
         throw new Error(payload.error?.message ?? 'Could not create the simulation')
       }
+      showToast('Simulation created as a draft.')
       router.push(`/admin/cms/simulations/${payload.data.id}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not create the simulation')
