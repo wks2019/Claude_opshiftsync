@@ -28,32 +28,9 @@ $$;
 
 -- Returns the caller's hotel_group_id (tenant root) without recursive RLS lookups.
 -- SECURITY DEFINER bypasses RLS on users table for this single, narrow lookup.
-create or replace function auth_hotel_group_id()
-returns uuid
-language sql
-security definer
-stable
-set search_path = public
-as $$
-  select hotel_group_id from users where id = auth.uid();
-$$;
-
--- Returns true if the caller holds the given role name.
-create or replace function auth_has_role(role_name text)
-returns boolean
-language sql
-security definer
-stable
-set search_path = public
-as $$
-  select exists (
-    select 1
-    from user_roles ur
-    join roles r on r.id = ur.role_id
-    where ur.user_id = auth.uid()
-      and r.name = role_name
-  );
-$$;
+-- Defined after TENANCY & IDENTITY below: language sql functions are parsed
+-- and validated against real tables at CREATE FUNCTION time (unlike plpgsql,
+-- which defers checking), so this must come after users/roles/user_roles exist.
 
 -- -----------------------------------------------------------------------------
 -- TENANCY & IDENTITY
@@ -122,6 +99,35 @@ create table user_roles (
   role_id uuid not null references roles(id) on delete restrict,
   unique (user_id, role_id)
 );
+
+-- Returns the caller's hotel_group_id (tenant root) without recursive RLS lookups.
+-- SECURITY DEFINER bypasses RLS on users table for this single, narrow lookup.
+create or replace function auth_hotel_group_id()
+returns uuid
+language sql
+security definer
+stable
+set search_path = public
+as $$
+  select hotel_group_id from users where id = auth.uid();
+$$;
+
+-- Returns true if the caller holds the given role name.
+create or replace function auth_has_role(role_name text)
+returns boolean
+language sql
+security definer
+stable
+set search_path = public
+as $$
+  select exists (
+    select 1
+    from user_roles ur
+    join roles r on r.id = ur.role_id
+    where ur.user_id = auth.uid()
+      and r.name = role_name
+  );
+$$;
 
 -- -----------------------------------------------------------------------------
 -- LMS
