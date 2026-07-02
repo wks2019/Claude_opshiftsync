@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap');
+
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #10201b;
+  --color-ink-soft: #2a3a34;
+  --color-paper: #faf8f3;
+  --color-paper-raised: #ffffff;
+  --color-brass: #a8894e;
+  --color-brass-soft: #c8b088;
+  --color-stone: #8c8c84;
+  --color-hairline: rgb(140 140 132 / 0.25);
+  --color-claret: #7a2e2e;
+  --color-sage: #5e7a6a;
+
+  --font-display: 'Marcellus', serif;
+  --font-body: 'Hanken Grotesk', sans-serif;
+  --font-data: 'Spline Sans Mono', monospace;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-brass-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Display face: one element per screen, always letterspaced */
+  .display {
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+    font-weight: 400;
+  }
+
+  /* Eyebrow labels above sections, audit-sheet style */
+  .eyebrow {
+    font-family: var(--font-data);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-stone);
+  }
+
+  .hairline {
+    border-color: var(--color-hairline);
+  }
+
+  .data {
+    font-family: var(--font-data);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The service bar: thin brass progress motif used across the product */
+  .service-bar {
+    height: 2px;
+    background: var(--color-hairline);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-bar > span {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--color-brass);
+    transition: width 200ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-bar > span {
+      transition: none;
+    }
+  }
+}
