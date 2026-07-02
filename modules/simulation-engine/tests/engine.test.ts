@@ -67,14 +67,14 @@ describe('validateDefinition', () => {
 
   it('flags unknown next states', () => {
     const definition = buildDefinition()
-    definition.states['state-1'].choices[0].nextStateId = 'ghost-state'
+    definition.states['state-1']!.choices[0]!.nextStateId = 'ghost-state'
     const issues = validateDefinition(definition)
     expect(issues.some((issue) => issue.code === 'UNKNOWN_NEXT_STATE')).toBe(true)
   })
 
   it('flags missing terminal state', () => {
     const definition = buildDefinition()
-    definition.states['state-3'].isTerminal = false
+    definition.states['state-3']!.isTerminal = false
     const issues = validateDefinition(definition)
     expect(issues.some((issue) => issue.code === 'NO_TERMINAL_STATE')).toBe(true)
   })

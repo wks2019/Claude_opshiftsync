@@ -25,7 +25,13 @@ export async function POST(_request: Request, { params }: RouteParams): Promise<
     const snapshot = createSession(definition, 'pending')
     const sessionId = await createSessionRow(simulationId, definition.entryStateId, userId)
 
+    // createSession already ran assertValidDefinition, which guarantees
+    // entryStateId resolves to a real state. This guard is for the type
+    // checker, not a runtime possibility.
     const entryState = definition.states[definition.entryStateId]
+    if (!entryState) {
+      throw new ApiError('INTERNAL_ERROR', 'Entry state missing after validation', 500)
+    }
 
     return ok(
       {

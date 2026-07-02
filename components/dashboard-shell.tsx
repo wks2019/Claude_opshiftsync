@@ -43,17 +43,20 @@ interface DashboardShellProps {
  * Content sits on a wide, quiet page: whitespace does the luxury work.
  */
 export function DashboardShell({ role, propertyName, currentPath, children }: DashboardShellProps) {
+  const navItems = NAV[role]
+  const homeHref = navItems[0]?.href ?? '/'
+
   return (
     <div className="min-h-dvh bg-paper">
       <header className="border-b hairline">
         <div className="mx-auto flex max-w-6xl items-baseline justify-between px-6 py-5">
-          <Link href={NAV[role][0].href} className="display text-xl text-ink">
+          <Link href={homeHref} className="display text-xl text-ink">
             {propertyName}
           </Link>
 
           <nav aria-label="Primary">
             <ul className="flex items-baseline gap-7">
-              {NAV[role].map(({ href, label }) => {
+              {navItems.map(({ href, label }) => {
                 const isActive = currentPath === href
                 return (
                   <li key={href}>

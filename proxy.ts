@@ -1,7 +1,16 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-const PUBLIC_PATHS = ['/', '/pricing', '/login', '/register', '/reset-password', '/auth/set-password']
+const PUBLIC_PATHS = [
+  '/',
+  '/pricing',
+  '/login',
+  '/register',
+  '/reset-password',
+  '/auth/set-password',
+  '/api/v1/health',
+  '/api/v1/certificates/verify',
+]
 
 type AppRole = 'guest' | 'staff' | 'manager' | 'administrator'
 
