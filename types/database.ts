@@ -175,6 +175,56 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['simulation_results']['Row']>
         Relationships: []
       }
+      sops: {
+        Row: {
+          id: string
+          hotel_group_id: string
+          title: string
+          department_id: string | null
+          current_version_id: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['sops']['Row']> & {
+          hotel_group_id: string
+          title: string
+        }
+        Update: Partial<Database['public']['Tables']['sops']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'sops_current_version_id_fkey'
+            columns: ['current_version_id']
+            isOneToOne: false
+            referencedRelation: 'sop_versions'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      sop_versions: {
+        Row: {
+          id: string
+          sop_id: string
+          version_number: number
+          steps: string[]
+          failure_modes: unknown
+          published_at: string | null
+        }
+        Insert: Partial<Database['public']['Tables']['sop_versions']['Row']> & {
+          sop_id: string
+          version_number: number
+          steps: string[]
+        }
+        Update: Partial<Database['public']['Tables']['sop_versions']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'sop_versions_sop_id_fkey'
+            columns: ['sop_id']
+            isOneToOne: false
+            referencedRelation: 'sops'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       certificates: {
         Row: {
           id: string

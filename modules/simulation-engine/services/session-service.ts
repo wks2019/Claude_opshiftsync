@@ -28,18 +28,29 @@ interface ChoiceRow {
 }
 
 /**
- * Loads a published simulation and assembles the in-memory definition
- * the engine operates on. RLS scopes rows to the caller's tenant.
+ * Loads a simulation and assembles the in-memory definition the engine
+ * operates on. RLS scopes rows to the caller's tenant. By default only
+ * published simulations load, matching the real session-start flow;
+ * pass requirePublished: false for pre-publish validation, where the
+ * simulation is by definition not yet published.
  */
-export async function loadDefinition(simulationId: string): Promise<SimulationDefinition> {
+export async function loadDefinition(
+  simulationId: string,
+  options: { requirePublished?: boolean } = {}
+): Promise<SimulationDefinition> {
+  const { requirePublished = true } = options
   const supabase = await createClient()
 
-  const { data: simulation, error: simError } = await supabase
+  let query = supabase
     .from('simulations')
     .select('id, title, type, difficulty, entry_state_id, status')
     .eq('id', simulationId)
-    .eq('status', 'published')
-    .single()
+
+  if (requirePublished) {
+    query = query.eq('status', 'published')
+  }
+
+  const { data: simulation, error: simError } = await query.single()
 
   if (simError || !simulation) {
     throw new Error(`Simulation ${simulationId} not found or not published`)

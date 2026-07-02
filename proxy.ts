@@ -10,6 +10,7 @@ const PUBLIC_PATHS = [
   '/auth/set-password',
   '/api/v1/health',
   '/api/v1/certificates/verify',
+  '/certificates/verify',
 ]
 
 type AppRole = 'guest' | 'staff' | 'manager' | 'administrator'

@@ -51,10 +51,13 @@ export default async function AdminContentPage() {
           <ol>
             {(simulations ?? []).map((sim) => (
               <li key={sim.id} className="border-t hairline py-3">
-                <div className="flex items-baseline justify-between gap-4">
+                <Link
+                  href={`/admin/cms/simulations/${sim.id}`}
+                  className="flex items-baseline justify-between gap-4 transition-colors hover:text-brass"
+                >
                   <span className="text-ink-soft">{sim.title}</span>
                   <span className="eyebrow shrink-0">{sim.status}</span>
-                </div>
+                </Link>
               </li>
             ))}
             {(!simulations || simulations.length === 0) && (
@@ -62,10 +65,12 @@ export default async function AdminContentPage() {
             )}
             <li className="border-t hairline" aria-hidden="true" />
           </ol>
-          <p className="mt-4 text-sm text-stone">
-            Simulation authoring (states, choices, scoring) is created via seed data for now;
-            full visual authoring is a larger build planned separately.
-          </p>
+          <Link
+            href="/admin/cms/simulations/new"
+            className="eyebrow mt-6 inline-block border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass"
+          >
+            New simulation
+          </Link>
         </div>
       </div>
     </section>
