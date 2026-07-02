@@ -38,6 +38,59 @@ export type Database = {
           },
         ]
       }
+      competencies: {
+        Row: {
+          id: string
+          hotel_group_id: string
+          name: string
+          description: string | null
+        }
+        Insert: Partial<Database['public']['Tables']['competencies']['Row']> & {
+          hotel_group_id: string
+          name: string
+        }
+        Update: Partial<Database['public']['Tables']['competencies']['Row']>
+        Relationships: []
+      }
+      competency_scores: {
+        Row: {
+          id: string
+          user_id: string
+          competency_id: string
+          score: number
+          source_session_id: string | null
+          recorded_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['competency_scores']['Row']> & {
+          user_id: string
+          competency_id: string
+          score: number
+        }
+        Update: Partial<Database['public']['Tables']['competency_scores']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'competency_scores_competency_id_fkey'
+            columns: ['competency_id']
+            isOneToOne: false
+            referencedRelation: 'competencies'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      hotel_groups: {
+        Row: {
+          id: string
+          name: string
+          branding: Record<string, unknown>
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['hotel_groups']['Row']> & {
+          name: string
+        }
+        Update: Partial<Database['public']['Tables']['hotel_groups']['Row']>
+        Relationships: []
+      }
       roles: {
         Row: {
           id: string
@@ -134,6 +187,13 @@ export type Database = {
             referencedRelation: 'simulations'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'simulation_sessions_user_id_fkey'
+            columns: ['user_id']
+            isOneToOne: false
+            referencedRelation: 'users'
+            referencedColumns: ['id']
+          },
         ]
       }
       simulation_session_events: {
@@ -173,7 +233,15 @@ export type Database = {
           final_score: number
         }
         Update: Partial<Database['public']['Tables']['simulation_results']['Row']>
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'simulation_results_session_id_fkey'
+            columns: ['session_id']
+            isOneToOne: false
+            referencedRelation: 'simulation_sessions'
+            referencedColumns: ['id']
+          },
+        ]
       }
       sops: {
         Row: {
