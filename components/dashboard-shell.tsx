@@ -44,13 +44,12 @@ interface DashboardShellProps {
  */
 export function DashboardShell({ role, propertyName, currentPath, children }: DashboardShellProps) {
   const navItems = NAV[role]
-  const homeHref = navItems[0]?.href ?? '/'
 
   return (
     <div className="min-h-dvh bg-paper">
       <header className="border-b hairline">
         <div className="mx-auto flex max-w-6xl items-baseline justify-between px-6 py-5">
-          <Link href={homeHref} className="display text-xl text-ink">
+          <Link href="/" className="display text-xl text-ink transition-colors hover:text-brass">
             {propertyName}
           </Link>
 
