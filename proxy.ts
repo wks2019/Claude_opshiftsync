@@ -79,13 +79,20 @@ export async function proxy(request: NextRequest) {
   }
 
   if (user) {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
+    // Resolved directly from the database rather than a JWT custom claim.
+    // The claim approach (custom_access_token_hook, see migration 002)
+    // requires registering the hook in the Supabase dashboard's Auth
+    // Hooks settings, a manual step outside this codebase. Querying here
+    // instead means role routing works correctly with zero external
+    // configuration, at the cost of one extra query per navigation.
+    const { data: roleRow } = await supabase
+      .from('user_roles')
+      .select('roles(name)')
+      .eq('user_id', user.id)
+      .limit(1)
+      .maybeSingle()
 
-    const appRole = (session?.user.app_metadata?.app_role ??
-      (session as unknown as { app_role?: AppRole })?.app_role ??
-      'staff') as AppRole
+    const appRole = ((roleRow?.roles as { name?: AppRole } | null)?.name ?? 'staff') as AppRole
 
     if (pathname === '/login') {
       return NextResponse.redirect(new URL(ROLE_HOME[appRole], request.url))

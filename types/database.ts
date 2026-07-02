@@ -9,6 +9,28 @@
 export type Database = {
   public: {
     Tables: {
+      user_roles: {
+        Row: {
+          id: string
+          user_id: string
+          role_id: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          role_id: string
+        }
+        Update: Partial<Database['public']['Tables']['user_roles']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'user_roles_role_id_fkey'
+            columns: ['role_id']
+            isOneToOne: false
+            referencedRelation: 'roles'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       roles: {
         Row: {
           id: string
@@ -97,7 +119,15 @@ export type Database = {
           simulation_id: string
         }
         Update: Partial<Database['public']['Tables']['simulation_sessions']['Row']>
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'simulation_sessions_simulation_id_fkey'
+            columns: ['simulation_id']
+            isOneToOne: false
+            referencedRelation: 'simulations'
+            referencedColumns: ['id']
+          },
+        ]
       }
       simulation_session_events: {
         Row: {
