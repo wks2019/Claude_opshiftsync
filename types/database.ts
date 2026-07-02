@@ -369,6 +369,107 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['courses']['Row']>
         Relationships: []
       }
+      course_modules: {
+        Row: {
+          id: string
+          course_id: string
+          title: string
+          sequence: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['course_modules']['Row']> & {
+          course_id: string
+          title: string
+          sequence: number
+        }
+        Update: Partial<Database['public']['Tables']['course_modules']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'course_modules_course_id_fkey'
+            columns: ['course_id']
+            isOneToOne: false
+            referencedRelation: 'courses'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      lessons: {
+        Row: {
+          id: string
+          course_module_id: string
+          title: string
+          content: Record<string, unknown>
+          sequence: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['lessons']['Row']> & {
+          course_module_id: string
+          title: string
+          sequence: number
+        }
+        Update: Partial<Database['public']['Tables']['lessons']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'lessons_course_module_id_fkey'
+            columns: ['course_module_id']
+            isOneToOne: false
+            referencedRelation: 'course_modules'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      quizzes: {
+        Row: {
+          id: string
+          lesson_id: string
+          passing_score: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['quizzes']['Row']> & {
+          lesson_id: string
+          passing_score: number
+        }
+        Update: Partial<Database['public']['Tables']['quizzes']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'quizzes_lesson_id_fkey'
+            columns: ['lesson_id']
+            isOneToOne: false
+            referencedRelation: 'lessons'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      quiz_questions: {
+        Row: {
+          id: string
+          quiz_id: string
+          question: string
+          options: string[]
+          correct_option_index: number
+          sequence: number
+        }
+        Insert: Partial<Database['public']['Tables']['quiz_questions']['Row']> & {
+          quiz_id: string
+          question: string
+          options: string[]
+          correct_option_index: number
+          sequence: number
+        }
+        Update: Partial<Database['public']['Tables']['quiz_questions']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'quiz_questions_quiz_id_fkey'
+            columns: ['quiz_id']
+            isOneToOne: false
+            referencedRelation: 'quizzes'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       rate_limits: {
         Row: {
           bucket: string
