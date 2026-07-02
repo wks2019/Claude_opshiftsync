@@ -1,4 +1,5 @@
 import 'server-only'
+import { randomBytes } from 'node:crypto'
 import { createAdminClient } from '@/services/supabase/admin'
 import { z } from 'zod'
 
@@ -15,9 +16,7 @@ const inviteUserSchema = z.object({
 export type InviteUserInput = z.infer<typeof inviteUserSchema>
 
 function generateTempPassword(): string {
-  const bytes = new Uint8Array(12)
-  crypto.getRandomValues(bytes)
-  const random = Array.from(bytes, (b) => b.toString(36).padStart(2, '0')).join('').slice(0, 16)
+  const random = randomBytes(12).toString('hex').slice(0, 16)
   return `Cw-${random}!1`
 }
 
