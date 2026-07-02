@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/services/supabase/server'
+import { SopVersionEditor } from '@/components/sop-version-editor'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -28,6 +29,12 @@ export default async function SopDetailPage({ params }: PageProps) {
         .single()
     : { data: null }
 
+  const { data: history } = await supabase
+    .from('sop_versions')
+    .select('id, version_number, published_at')
+    .eq('sop_id', id)
+    .order('version_number', { ascending: false })
+
   return (
     <section className="max-w-xl">
       <Link
@@ -52,6 +59,14 @@ export default async function SopDetailPage({ params }: PageProps) {
       ) : (
         <p className="text-stone">This SOP has no published version yet.</p>
       )}
+
+      <div className="mt-16 border-t hairline pt-8">
+        <SopVersionEditor
+          sopId={sop.id}
+          currentSteps={(version?.steps as string[] | undefined) ?? []}
+          history={history ?? []}
+        />
+      </div>
     </section>
   )
 }
