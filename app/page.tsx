@@ -32,9 +32,9 @@ export default function HomePage() {
   return (
     <main>
       <header className="border-b hairline">
-        <div className="mx-auto flex max-w-6xl items-baseline justify-between px-6 py-5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
           <span>
-            <Image src="/logo.png" alt="Chosen Workflow" width={168} height={98} className="h-9 w-auto" priority />
+            <Image src="/logo.png" alt="Chosen Workflow" width={168} height={98} className="h-14 w-auto" priority />
           </span>
           <Link
             href="/login"

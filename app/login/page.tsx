@@ -39,7 +39,7 @@ function LoginForm() {
         alt="Chosen Workflow"
         width={168}
         height={98}
-        className="mb-8 h-10 w-auto"
+        className="mb-8 h-16 w-auto"
         priority
       />
       <h1 className="display mb-8 text-2xl text-ink">Sign in</h1>
