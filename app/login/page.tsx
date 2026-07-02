@@ -37,8 +37,8 @@ function LoginForm() {
       <Image
         src="/logo.png"
         alt="Chosen Workflow"
-        width={168}
-        height={98}
+        width={463}
+        height={105}
         className="mb-8 h-16 w-auto"
         priority
       />

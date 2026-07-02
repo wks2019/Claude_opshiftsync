@@ -71,7 +71,7 @@ export function DashboardShell({ role, propertyName, children }: DashboardShellP
       <header className="border-b hairline">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
           <Link href="/" className="shrink-0 transition-opacity hover:opacity-80">
-            <Image src="/logo.png" alt={propertyName} width={168} height={98} className="h-14 w-auto" priority />
+            <Image src="/logo.png" alt={propertyName} width={463} height={105} className="h-14 w-auto" priority />
           </Link>
 
           <div className="flex items-baseline gap-7">
