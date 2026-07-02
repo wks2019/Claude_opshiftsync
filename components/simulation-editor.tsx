@@ -3,6 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/toast-provider'
+import { Button } from '@/components/ui/button'
+import { Input, Select, Textarea } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 
 interface StateRow {
   id: string
@@ -152,24 +155,14 @@ export function SimulationEditor({
         <span className="eyebrow">{status}</span>
         <div className="flex gap-4">
           {status !== 'published' && (
-            <button
-              type="button"
-              disabled={isBusy}
-              onClick={() => setStatus('published')}
-              className="eyebrow border-b border-sage pb-0.5 text-sage transition-opacity hover:opacity-70 disabled:opacity-40"
-            >
+            <Button variant="subtle" tone="sage" disabled={isBusy} onClick={() => setStatus('published')}>
               Publish
-            </button>
+            </Button>
           )}
           {status !== 'archived' && (
-            <button
-              type="button"
-              disabled={isBusy}
-              onClick={() => setStatus('archived')}
-              className="eyebrow border-b border-claret pb-0.5 text-claret transition-opacity hover:opacity-70 disabled:opacity-40"
-            >
+            <Button variant="subtle" tone="claret" disabled={isBusy} onClick={() => setStatus('archived')}>
               Archive
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -184,12 +177,12 @@ export function SimulationEditor({
         <label htmlFor="entryState" className="eyebrow mb-1.5 block">
           Entry state
         </label>
-        <select
+        <Select
           id="entryState"
           value={entryStateId ?? ''}
           disabled={isBusy}
           onChange={(event) => setEntryState(event.target.value)}
-          className="w-full max-w-sm border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
+          className="max-w-sm"
         >
           <option value="" disabled>
             Choose a state
@@ -199,14 +192,14 @@ export function SimulationEditor({
               {s.name}
             </option>
           ))}
-        </select>
+        </Select>
       </div>
 
       <div className="border-t hairline pt-6">
         <p className="eyebrow mb-4">States</p>
         {states.length === 0 && <p className="mb-6 text-stone">No states yet.</p>}
         {states.map((s) => (
-          <div key={s.id} className="mb-6 border hairline p-4">
+          <Card key={s.id} className="mb-6">
             <div className="flex items-baseline justify-between gap-4">
               <p className="text-ink-soft">{s.name}</p>
               <span className="eyebrow shrink-0">
@@ -224,32 +217,30 @@ export function SimulationEditor({
                   </li>
                 ))}
             </ul>
-          </div>
+          </Card>
         ))}
       </div>
 
       <form onSubmit={addState} className="mt-10 space-y-4 border-t hairline pt-6">
         <p className="eyebrow mb-2">Add a state</p>
-        <input
+        <Input
           required
           placeholder="State name"
           value={stateName}
           onChange={(event) => setStateName(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none focus:border-brass"
         />
-        <input
+        <Input
           required
           placeholder="Guest request / narration"
           value={guestRequest}
           onChange={(event) => setGuestRequest(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none focus:border-brass"
         />
         <div className="flex items-center gap-4">
-          <input
+          <Input
             placeholder="Guest mood"
             value={guestMood}
             onChange={(event) => setGuestMood(event.target.value)}
-            className="border-b hairline bg-transparent py-2 text-ink outline-none focus:border-brass"
+            fullWidth={false}
           />
           <label className="eyebrow flex items-center gap-2">
             <input
@@ -260,23 +251,18 @@ export function SimulationEditor({
             Terminal state
           </label>
         </div>
-        <button
-          type="submit"
-          disabled={isBusy}
-          className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-        >
+        <Button type="submit" disabled={isBusy}>
           Add state
-        </button>
+        </Button>
       </form>
 
       {states.length >= 2 && (
         <form onSubmit={addChoice} className="mt-10 space-y-4 border-t hairline pt-6">
           <p className="eyebrow mb-2">Add a choice</p>
-          <select
+          <Select
             required
             value={choiceStateId}
             onChange={(event) => setChoiceStateId(event.target.value)}
-            className="w-full border-b hairline bg-transparent py-2 text-ink outline-none focus:border-brass"
           >
             <option value="" disabled>
               From state
@@ -286,20 +272,18 @@ export function SimulationEditor({
                 {s.name}
               </option>
             ))}
-          </select>
-          <textarea
+          </Select>
+          <Textarea
             required
             rows={2}
             placeholder="Choice label (what the staff member says or does)"
             value={choiceLabel}
             onChange={(event) => setChoiceLabel(event.target.value)}
-            className="w-full border hairline bg-transparent p-2 text-ink outline-none focus:border-brass"
           />
-          <select
+          <Select
             required
             value={choiceNextStateId}
             onChange={(event) => setChoiceNextStateId(event.target.value)}
-            className="w-full border-b hairline bg-transparent py-2 text-ink outline-none focus:border-brass"
           >
             <option value="" disabled>
               Leads to state
@@ -309,21 +293,19 @@ export function SimulationEditor({
                 {s.name}
               </option>
             ))}
-          </select>
-          <textarea
+          </Select>
+          <Textarea
             required
             rows={2}
             placeholder="Guest reaction (dialogue)"
             value={choiceDialogue}
             onChange={(event) => setChoiceDialogue(event.target.value)}
-            className="w-full border hairline bg-transparent p-2 text-ink outline-none focus:border-brass"
           />
-          <input
+          <Input
             required
             placeholder="Guest mood shift"
             value={choiceMoodShift}
             onChange={(event) => setChoiceMoodShift(event.target.value)}
-            className="w-full border-b hairline bg-transparent py-2 text-ink outline-none focus:border-brass"
           />
           <div className="grid grid-cols-4 gap-3">
             {[
@@ -334,7 +316,7 @@ export function SimulationEditor({
             ].map(([label, value, setter]) => (
               <div key={label as string}>
                 <label className="eyebrow mb-1 block">{label as string}</label>
-                <input
+                <Input
                   type="number"
                   min={0}
                   max={25}
@@ -342,18 +324,14 @@ export function SimulationEditor({
                   onChange={(event) =>
                     (setter as (n: number) => void)(Number(event.target.value))
                   }
-                  className="w-full border-b hairline bg-transparent py-1 text-ink outline-none focus:border-brass"
+                  dense
                 />
               </div>
             ))}
           </div>
-          <button
-            type="submit"
-            disabled={isBusy}
-            className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-          >
+          <Button type="submit" disabled={isBusy}>
             Add choice
-          </button>
+          </Button>
         </form>
       )}
     </div>

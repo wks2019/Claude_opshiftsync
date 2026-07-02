@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/toast-provider'
+import { Button } from '@/components/ui/button'
+import { Input, Select } from '@/components/ui/input'
 
 const TYPES = [
   ['in_room_dining', 'In-Room Dining'],
@@ -51,12 +53,11 @@ export function CreateSimulationForm() {
         <label htmlFor="simTitle" className="eyebrow mb-1.5 block">
           Title
         </label>
-        <input
+        <Input
           id="simTitle"
           required
           value={title}
           onChange={(event) => setTitle(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -64,34 +65,32 @@ export function CreateSimulationForm() {
         <label htmlFor="simType" className="eyebrow mb-1.5 block">
           Type
         </label>
-        <select
+        <Select
           id="simType"
           value={type}
           onChange={(event) => setType(event.target.value as typeof type)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         >
           {TYPES.map(([value, label]) => (
             <option key={value} value={value}>
               {label}
             </option>
           ))}
-        </select>
+        </Select>
       </div>
 
       <div>
         <label htmlFor="simDifficulty" className="eyebrow mb-1.5 block">
           Difficulty
         </label>
-        <select
+        <Select
           id="simDifficulty"
           value={difficulty}
           onChange={(event) => setDifficulty(event.target.value as typeof difficulty)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         >
           <option value="standard">Standard</option>
           <option value="advanced">Advanced</option>
           <option value="vip">VIP</option>
-        </select>
+        </Select>
       </div>
 
       {error && (
@@ -100,13 +99,9 @@ export function CreateSimulationForm() {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-      >
-        {isSubmitting ? 'Creating…' : 'Create draft'}
-      </button>
+      <Button type="submit" isLoading={isSubmitting} loadingLabel="Creating…">
+        Create draft
+      </Button>
     </form>
   )
 }

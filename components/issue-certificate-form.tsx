@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 
 interface IssueCertificateFormProps {
   courseId: string
@@ -56,7 +59,7 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
 
   if (issued) {
     return (
-      <div className="border hairline p-5">
+      <Card>
         <p className="eyebrow mb-2 text-sage">Certificate issued</p>
         <p className="data text-ink">{issued.certificateNumber}</p>
         <a
@@ -67,14 +70,10 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
         >
           View verification page
         </a>
-        <button
-          type="button"
-          onClick={() => setIssued(null)}
-          className="eyebrow mt-3 ml-6 border-b border-transparent pb-0.5 text-stone transition-colors hover:text-ink"
-        >
+        <Button variant="subtle" tone="stone" className="mt-3 ml-6" onClick={() => setIssued(null)}>
           Issue another
-        </button>
-      </div>
+        </Button>
+      </Card>
     )
   }
 
@@ -84,13 +83,12 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
         <label htmlFor="certRecipientEmail" className="eyebrow mb-1.5 block">
           Recipient email
         </label>
-        <input
+        <Input
           id="certRecipientEmail"
           type="email"
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -100,13 +98,9 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-      >
-        {isSubmitting ? 'Issuing…' : 'Issue certificate'}
-      </button>
+      <Button type="submit" isLoading={isSubmitting} loadingLabel="Issuing…">
+        Issue certificate
+      </Button>
     </form>
   )
 }

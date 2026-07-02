@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/toast-provider'
+import { Input } from '@/components/ui/input'
 
 export function PropertyNameForm({ initialName }: { initialName: string }) {
   const router = useRouter()
@@ -39,12 +40,11 @@ export function PropertyNameForm({ initialName }: { initialName: string }) {
       <label htmlFor="propertyName" className="eyebrow mb-1.5 block">
         Property name
       </label>
-      <input
+      <Input
         id="propertyName"
         value={name}
         onChange={(event) => setName(event.target.value)}
         onBlur={save}
-        className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
       />
       {error && (
         <p role="alert" className="mt-2 text-sm text-claret">

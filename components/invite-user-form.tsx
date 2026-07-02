@@ -2,6 +2,9 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Input, Select } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 
 interface InviteResult {
   email: string
@@ -46,7 +49,7 @@ export function InviteUserForm() {
 
   if (result) {
     return (
-      <div className="border hairline p-5">
+      <Card>
         <p className="eyebrow mb-2 text-sage">Account created</p>
         <p className="text-ink-soft">
           Share these credentials with <span className="text-ink">{result.email}</span> directly.
@@ -62,14 +65,10 @@ export function InviteUserForm() {
             <dd className="text-ink">{result.tempPassword}</dd>
           </div>
         </dl>
-        <button
-          type="button"
-          onClick={() => setResult(null)}
-          className="eyebrow mt-5 border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass"
-        >
+        <Button variant="subtle" tone="brass" className="mt-5" onClick={() => setResult(null)}>
           Invite another
-        </button>
-      </div>
+        </Button>
+      </Card>
     )
   }
 
@@ -79,12 +78,11 @@ export function InviteUserForm() {
         <label htmlFor="fullName" className="eyebrow mb-1.5 block">
           Full name
         </label>
-        <input
+        <Input
           id="fullName"
           required
           value={fullName}
           onChange={(event) => setFullName(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -92,13 +90,12 @@ export function InviteUserForm() {
         <label htmlFor="email" className="eyebrow mb-1.5 block">
           Email
         </label>
-        <input
+        <Input
           id="email"
           type="email"
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -106,16 +103,11 @@ export function InviteUserForm() {
         <label htmlFor="role" className="eyebrow mb-1.5 block">
           Role
         </label>
-        <select
-          id="role"
-          value={role}
-          onChange={(event) => setRole(event.target.value as typeof role)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
-        >
+        <Select id="role" value={role} onChange={(event) => setRole(event.target.value as typeof role)}>
           <option value="staff">Staff</option>
           <option value="manager">Manager</option>
           <option value="administrator">Administrator</option>
-        </select>
+        </Select>
       </div>
 
       {error && (
@@ -124,13 +116,9 @@ export function InviteUserForm() {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-      >
-        {isSubmitting ? 'Creating…' : 'Create account'}
-      </button>
+      <Button type="submit" isLoading={isSubmitting} loadingLabel="Creating…">
+        Create account
+      </Button>
     </form>
   )
 }

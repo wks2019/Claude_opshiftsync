@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/toast-provider'
+import { Button } from '@/components/ui/button'
+import { Input, Textarea } from '@/components/ui/input'
 
 export function CreateSopForm() {
   const router = useRouter()
@@ -54,12 +56,11 @@ export function CreateSopForm() {
         <label htmlFor="sopTitle" className="eyebrow mb-1.5 block">
           Title
         </label>
-        <input
+        <Input
           id="sopTitle"
           required
           value={title}
           onChange={(event) => setTitle(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -67,13 +68,12 @@ export function CreateSopForm() {
         <label htmlFor="sopSteps" className="eyebrow mb-1.5 block">
           Steps (one per line)
         </label>
-        <textarea
+        <Textarea
           id="sopSteps"
           rows={6}
           value={stepsText}
           onChange={(event) => setStepsText(event.target.value)}
           placeholder={'Knock and announce before entering\nGreet the guest by name\n…'}
-          className="w-full border hairline bg-transparent p-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -83,13 +83,9 @@ export function CreateSopForm() {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-      >
-        {isSubmitting ? 'Creating…' : 'Create SOP'}
-      </button>
+      <Button type="submit" isLoading={isSubmitting} loadingLabel="Creating…">
+        Create SOP
+      </Button>
     </form>
   )
 }

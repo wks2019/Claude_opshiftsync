@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/toast-provider'
+import { Button } from '@/components/ui/button'
+import { Input, Textarea } from '@/components/ui/input'
 
 interface CourseEditorProps {
   courseId: string
@@ -62,24 +64,24 @@ export function CourseEditor({
         <span className="eyebrow">{STATUS_LABEL[status]}</span>
         <div className="flex gap-3">
           {status !== 'published' && (
-            <button
-              type="button"
+            <Button
+              variant="subtle"
+              tone="sage"
               disabled={isSaving}
               onClick={() => save({ status: 'published' })}
-              className="eyebrow border-b border-sage pb-0.5 text-sage transition-opacity hover:opacity-70 disabled:opacity-40"
             >
               Publish
-            </button>
+            </Button>
           )}
           {status !== 'archived' && (
-            <button
-              type="button"
+            <Button
+              variant="subtle"
+              tone="claret"
               disabled={isSaving}
               onClick={() => save({ status: 'archived' })}
-              className="eyebrow border-b border-claret pb-0.5 text-claret transition-opacity hover:opacity-70 disabled:opacity-40"
             >
               Archive
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -89,12 +91,11 @@ export function CourseEditor({
           <label htmlFor="editTitle" className="eyebrow mb-1.5 block">
             Title
           </label>
-          <input
+          <Input
             id="editTitle"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
             onBlur={() => title !== initialTitle && save({ title })}
-            className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
           />
         </div>
 
@@ -102,13 +103,12 @@ export function CourseEditor({
           <label htmlFor="editDescription" className="eyebrow mb-1.5 block">
             Description
           </label>
-          <textarea
+          <Textarea
             id="editDescription"
             rows={4}
             value={description}
             onChange={(event) => setDescription(event.target.value)}
             onBlur={() => description !== initialDescription && save({ description })}
-            className="w-full border hairline bg-transparent p-2 text-ink outline-none transition-colors focus:border-brass"
           />
         </div>
 

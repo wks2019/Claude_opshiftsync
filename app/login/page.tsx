@@ -3,6 +3,8 @@
 import { Suspense, useState, type FormEvent } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { login } from '@/services/auth/session-actions'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 function LoginForm() {
   const router = useRouter()
@@ -39,14 +41,13 @@ function LoginForm() {
           <label htmlFor="email" className="eyebrow mb-1.5 block">
             Email
           </label>
-          <input
+          <Input
             id="email"
             type="email"
             required
             autoComplete="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
           />
         </div>
 
@@ -54,14 +55,13 @@ function LoginForm() {
           <label htmlFor="password" className="eyebrow mb-1.5 block">
             Password
           </label>
-          <input
+          <Input
             id="password"
             type="password"
             required
             autoComplete="current-password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
           />
         </div>
 
@@ -71,13 +71,9 @@ function LoginForm() {
           </p>
         )}
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full border border-ink py-2.5 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-        >
-          {isSubmitting ? 'Signing in…' : 'Sign in'}
-        </button>
+        <Button type="submit" size="full" isLoading={isSubmitting} loadingLabel="Signing in…">
+          Sign in
+        </Button>
       </form>
     </main>
   )

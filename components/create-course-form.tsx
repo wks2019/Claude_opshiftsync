@@ -3,6 +3,8 @@
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/toast-provider'
+import { Button } from '@/components/ui/button'
+import { Input, Textarea } from '@/components/ui/input'
 
 export function CreateCourseForm() {
   const router = useRouter()
@@ -44,12 +46,11 @@ export function CreateCourseForm() {
         <label htmlFor="courseTitle" className="eyebrow mb-1.5 block">
           Title
         </label>
-        <input
+        <Input
           id="courseTitle"
           required
           value={title}
           onChange={(event) => setTitle(event.target.value)}
-          className="w-full border-b hairline bg-transparent py-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -57,12 +58,11 @@ export function CreateCourseForm() {
         <label htmlFor="courseDescription" className="eyebrow mb-1.5 block">
           Description
         </label>
-        <textarea
+        <Textarea
           id="courseDescription"
           rows={3}
           value={description}
           onChange={(event) => setDescription(event.target.value)}
-          className="w-full border hairline bg-transparent p-2 text-ink outline-none transition-colors focus:border-brass"
         />
       </div>
 
@@ -72,13 +72,9 @@ export function CreateCourseForm() {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper disabled:opacity-40"
-      >
-        {isSubmitting ? 'Creating…' : 'Create draft'}
-      </button>
+      <Button type="submit" isLoading={isSubmitting} loadingLabel="Creating…">
+        Create draft
+      </Button>
     </form>
   )
 }
