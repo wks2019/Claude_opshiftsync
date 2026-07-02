@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { AuditLedger } from '@/components/audit-ledger'
 
@@ -32,7 +33,9 @@ export default function HomePage() {
     <main>
       <header className="border-b hairline">
         <div className="mx-auto flex max-w-6xl items-baseline justify-between px-6 py-5">
-          <span className="display text-xl text-ink">Chosen Workflow</span>
+          <span>
+            <Image src="/logo.png" alt="Chosen Workflow" width={168} height={98} className="h-9 w-auto" priority />
+          </span>
           <Link
             href="/login"
             className="eyebrow border-b border-transparent pb-1 text-ink transition-colors hover:border-brass"

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Suspense, useState, type FormEvent } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { login } from '@/services/auth/session-actions'
@@ -33,7 +34,14 @@ function LoginForm() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center px-6">
-      <p className="eyebrow mb-2">Chosen Workflow</p>
+      <Image
+        src="/logo.png"
+        alt="Chosen Workflow"
+        width={168}
+        height={98}
+        className="mb-8 h-10 w-auto"
+        priority
+      />
       <h1 className="display mb-8 text-2xl text-ink">Sign in</h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">

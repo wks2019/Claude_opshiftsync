@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState, type ReactNode } from 'react'
@@ -69,8 +70,8 @@ export function DashboardShell({ role, propertyName, children }: DashboardShellP
     <div className="min-h-dvh bg-paper">
       <header className="border-b hairline">
         <div className="mx-auto flex max-w-6xl items-baseline justify-between px-6 py-5">
-          <Link href="/" className="display text-xl text-ink transition-colors hover:text-brass">
-            {propertyName}
+          <Link href="/" className="shrink-0 transition-opacity hover:opacity-80">
+            <Image src="/logo.png" alt={propertyName} width={168} height={98} className="h-9 w-auto" priority />
           </Link>
 
           <div className="flex items-baseline gap-7">
