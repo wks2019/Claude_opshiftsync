@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Input, Select } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 
 interface IssueCertificateFormProps {
@@ -16,6 +16,7 @@ interface IssuedCertificate {
 
 export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
   const [email, setEmail] = useState('')
+  const [expiresInMonths, setExpiresInMonths] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [issued, setIssued] = useState<IssuedCertificate | null>(null)
@@ -38,7 +39,11 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
       const issueResponse = await fetch('/api/v1/admin/certificates/issue', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: lookupPayload.data.id, courseId }),
+        body: JSON.stringify({
+          userId: lookupPayload.data.id,
+          courseId,
+          ...(expiresInMonths ? { expiresInMonths: Number(expiresInMonths) } : {}),
+        }),
       })
       const issuePayload = await issueResponse.json()
       if (!issueResponse.ok || issuePayload.error) {
@@ -50,6 +55,7 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
         qrToken: issuePayload.data.qr_token,
       })
       setEmail('')
+      setExpiresInMonths('')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not issue the certificate')
     } finally {
@@ -90,6 +96,22 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
+      </div>
+
+      <div>
+        <label htmlFor="certExpiry" className="eyebrow mb-1.5 block">
+          Expiry
+        </label>
+        <Select
+          id="certExpiry"
+          value={expiresInMonths}
+          onChange={(event) => setExpiresInMonths(event.target.value)}
+        >
+          <option value="">Never expires</option>
+          <option value="12">1 year</option>
+          <option value="24">2 years</option>
+          <option value="36">3 years</option>
+        </Select>
       </div>
 
       {error && (

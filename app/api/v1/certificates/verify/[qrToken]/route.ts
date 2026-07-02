@@ -24,7 +24,7 @@ export async function GET(_request: Request, { params }: RouteParams): Promise<N
 
     const { data, error } = await admin
       .from('certificates')
-      .select('certificate_number, issued_at, revoked_at, users(full_name), courses(title)')
+      .select('certificate_number, issued_at, revoked_at, expires_at, users(full_name), courses(title)')
       .eq('qr_token', qrToken)
       .single()
 
@@ -32,13 +32,17 @@ export async function GET(_request: Request, { params }: RouteParams): Promise<N
       throw new ApiError('NOT_FOUND', 'Certificate not found', 404)
     }
 
+    const isExpired = data.expires_at !== null && new Date(data.expires_at) < new Date()
+
     return ok({
       certificateNumber: data.certificate_number,
       holderName: (data.users as { full_name: string } | null)?.full_name ?? 'Unknown',
       courseTitle: (data.courses as { title: string } | null)?.title ?? null,
       issuedAt: data.issued_at,
-      valid: data.revoked_at === null,
+      expiresAt: data.expires_at,
+      valid: data.revoked_at === null && !isExpired,
       revokedAt: data.revoked_at,
+      expired: isExpired,
     })
   })
 }

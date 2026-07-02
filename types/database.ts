@@ -412,6 +412,7 @@ export type Database = {
           storage_path: string
           issued_at: string
           revoked_at: string | null
+          expires_at: string | null
         }
         Insert: Partial<Database['public']['Tables']['certificates']['Row']> & {
           user_id: string

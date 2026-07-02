@@ -8,6 +8,7 @@ import { createAdminClient } from '@/services/supabase/admin'
 const bodySchema = z.object({
   userId: z.string().uuid(),
   courseId: z.string().uuid(),
+  expiresInMonths: z.number().int().min(1).max(120).optional(),
 })
 
 function generateCertificateNumber(): string {
@@ -72,6 +73,13 @@ export async function POST(request: Request): Promise<NextResponse> {
     const certificateNumber = generateCertificateNumber()
     const qrToken = generateQrToken()
 
+    let expiresAt: string | null = null
+    if (body.expiresInMonths) {
+      const expiry = new Date()
+      expiry.setMonth(expiry.getMonth() + body.expiresInMonths)
+      expiresAt = expiry.toISOString()
+    }
+
     const { data: certificate, error } = await admin
       .from('certificates')
       .insert({
@@ -80,8 +88,9 @@ export async function POST(request: Request): Promise<NextResponse> {
         certificate_number: certificateNumber,
         qr_token: qrToken,
         storage_path: `certificates/${certificateNumber}.pdf`,
+        expires_at: expiresAt,
       })
-      .select('id, certificate_number, qr_token, issued_at')
+      .select('id, certificate_number, qr_token, issued_at, expires_at')
       .single()
 
     if (error || !certificate) {
