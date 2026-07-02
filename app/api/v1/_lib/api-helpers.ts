@@ -61,8 +61,7 @@ export async function handle(fn: () => Promise<NextResponse>): Promise<NextRespo
       return fail('VALIDATION_ERROR', message, 400)
     }
     console.error('Unhandled API error', error)
-    const debugMessage = error instanceof Error ? error.message : String(error)
-    return fail('INTERNAL_ERROR', `DEBUG: ${debugMessage}`, 500)
+    return fail('INTERNAL_ERROR', 'An unexpected error occurred', 500)
   }
 }
 
