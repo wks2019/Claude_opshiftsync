@@ -1,5 +1,6 @@
 import { createClient } from '@/services/supabase/server'
 import { PropertyNameForm } from '@/components/property-name-form'
+import { HotelsManager } from '@/components/hotels-manager'
 
 export default async function AdminPropertyPage() {
   const supabase = await createClient()
@@ -15,6 +16,36 @@ export default async function AdminPropertyPage() {
     ? await supabase.from('hotel_groups').select('id, name').eq('id', profile.hotel_group_id).single()
     : { data: null }
 
+  const { data: hotels } = profile
+    ? await supabase
+        .from('hotels')
+        .select('id, name')
+        .eq('hotel_group_id', profile.hotel_group_id)
+        .order('name', { ascending: true })
+    : { data: [] }
+
+  const hotelIds = (hotels ?? []).map((h) => h.id)
+
+  const { data: departments } =
+    hotelIds.length > 0
+      ? await supabase
+          .from('departments')
+          .select('id, hotel_id, name')
+          .in('hotel_id', hotelIds)
+          .order('name', { ascending: true })
+      : { data: [] }
+
+  const departmentIds = (departments ?? []).map((d) => d.id)
+
+  const { data: teams } =
+    departmentIds.length > 0
+      ? await supabase
+          .from('teams')
+          .select('id, department_id, name')
+          .in('department_id', departmentIds)
+          .order('name', { ascending: true })
+      : { data: [] }
+
   return (
     <section className="fade-in">
       <p className="eyebrow mb-2">Property</p>
@@ -26,9 +57,17 @@ export default async function AdminPropertyPage() {
         <p className="text-stone">Could not load property settings.</p>
       )}
 
+      <div className="mt-16 border-t hairline pt-8">
+        <p className="eyebrow mb-6">Hotels, departments, and teams</p>
+        <HotelsManager
+          hotels={hotels ?? []}
+          departments={departments ?? []}
+          teams={teams ?? []}
+        />
+      </div>
+
       <p className="mt-10 max-w-sm text-sm text-stone">
-        Branding (logo, colour palette, typography) and hotels/departments/teams management are
-        on the way.
+        Branding (logo, colour palette, typography) is on the way.
       </p>
     </section>
   )

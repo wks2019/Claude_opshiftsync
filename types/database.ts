@@ -91,6 +91,78 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['hotel_groups']['Row']>
         Relationships: []
       }
+      hotels: {
+        Row: {
+          id: string
+          hotel_group_id: string
+          name: string
+          standard_profile: string | null
+          branding_override: Record<string, unknown> | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['hotels']['Row']> & {
+          hotel_group_id: string
+          name: string
+        }
+        Update: Partial<Database['public']['Tables']['hotels']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'hotels_hotel_group_id_fkey'
+            columns: ['hotel_group_id']
+            isOneToOne: false
+            referencedRelation: 'hotel_groups'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      departments: {
+        Row: {
+          id: string
+          hotel_id: string
+          name: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['departments']['Row']> & {
+          hotel_id: string
+          name: string
+        }
+        Update: Partial<Database['public']['Tables']['departments']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'departments_hotel_id_fkey'
+            columns: ['hotel_id']
+            isOneToOne: false
+            referencedRelation: 'hotels'
+            referencedColumns: ['id']
+          },
+        ]
+      }
+      teams: {
+        Row: {
+          id: string
+          department_id: string
+          name: string
+          manager_id: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['teams']['Row']> & {
+          department_id: string
+          name: string
+        }
+        Update: Partial<Database['public']['Tables']['teams']['Row']>
+        Relationships: [
+          {
+            foreignKeyName: 'teams_department_id_fkey'
+            columns: ['department_id']
+            isOneToOne: false
+            referencedRelation: 'departments'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       roles: {
         Row: {
           id: string
