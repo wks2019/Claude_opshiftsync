@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { AuditLedger } from '@/components/audit-ledger'
+import { createPublicClient } from '@/services/supabase/public'
 
 const STEPS = [
   {
@@ -28,7 +29,39 @@ const DEMO_RESULT = {
 }
 const DEMO_FINAL = 96.9
 
-export default function HomePage() {
+const FALLBACK = {
+  heroEyebrow: 'For luxury hospitality',
+  heroTitle: 'Train the moment, not the manual.',
+  heroSubtitle:
+    'A learning and simulation platform built on Forbes Travel Guide and LQA standards. Every scenario is a real guest interaction. Every score is one your inspectors would recognise.',
+  footerText: 'Chosen Workflow',
+}
+
+export const revalidate = 300
+
+export default async function HomePage() {
+  let content: { hero_eyebrow: string; hero_title: string; hero_subtitle: string; footer_text: string } | null = null
+  try {
+    const supabase = createPublicClient()
+    const { data } = await supabase
+      .from('website_content')
+      .select('hero_eyebrow, hero_title, hero_subtitle, footer_text')
+      .eq('is_singleton', true)
+      .single()
+    content = data
+  } catch {
+    // Falls through to FALLBACK below. A missing env var or a transient
+    // Supabase outage must never break the build or take the marketing
+    // site down, this content is static copy, not critical data.
+  }
+
+  const copy = {
+    heroEyebrow: content?.hero_eyebrow ?? FALLBACK.heroEyebrow,
+    heroTitle: content?.hero_title ?? FALLBACK.heroTitle,
+    heroSubtitle: content?.hero_subtitle ?? FALLBACK.heroSubtitle,
+    footerText: content?.footer_text ?? FALLBACK.footerText,
+  }
+
   return (
     <main id="main-content">
       <header className="border-b hairline">
@@ -47,14 +80,12 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="mx-auto max-w-4xl px-6 pb-20 pt-24 text-center">
-        <p className="eyebrow mb-5">For luxury hospitality</p>
+        <p className="eyebrow mb-5">{copy.heroEyebrow}</p>
         <h1 className="display text-4xl leading-tight text-ink sm:text-5xl">
-          Train the moment, not the manual.
+          {copy.heroTitle}
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-lg text-ink-soft">
-          A learning and simulation platform built on Forbes Travel Guide and LQA standards.
-          Every scenario is a real guest interaction. Every score is one your inspectors would
-          recognise.
+          {copy.heroSubtitle}
         </p>
         <div className="mt-10 flex items-center justify-center gap-6">
           <Link
@@ -109,8 +140,7 @@ export default function HomePage() {
 
       <footer className="border-t hairline">
         <div className="mx-auto flex max-w-6xl items-baseline justify-between px-6 py-8">
-          <span className="eyebrow">Chosen Workflow</span>
-          <span className="eyebrow">Phase 1</span>
+          <span className="eyebrow">{copy.footerText}</span>
         </div>
       </footer>
     </main>

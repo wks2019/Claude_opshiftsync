@@ -616,6 +616,20 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['media_assets']['Row']>
         Relationships: []
       }
+      website_content: {
+        Row: {
+          id: string
+          is_singleton: boolean
+          hero_eyebrow: string
+          hero_title: string
+          hero_subtitle: string
+          footer_text: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['website_content']['Row']>
+        Update: Partial<Database['public']['Tables']['website_content']['Row']>
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           id: string

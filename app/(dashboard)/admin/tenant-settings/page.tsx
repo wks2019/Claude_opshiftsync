@@ -2,6 +2,7 @@ import { createClient } from '@/services/supabase/server'
 import { PropertyNameForm } from '@/components/property-name-form'
 import { HotelsManager } from '@/components/hotels-manager'
 import { BrandingForm } from '@/components/branding-form'
+import { WebsiteContentForm } from '@/components/website-content-form'
 
 export default async function AdminPropertyPage() {
   const supabase = await createClient()
@@ -20,6 +21,12 @@ export default async function AdminPropertyPage() {
         .eq('id', profile.hotel_group_id)
         .single()
     : { data: null }
+
+  const { data: websiteContent } = await supabase
+    .from('website_content')
+    .select('hero_eyebrow, hero_title, hero_subtitle, footer_text')
+    .eq('is_singleton', true)
+    .single()
 
   const { data: hotels } = profile
     ? await supabase
@@ -69,6 +76,16 @@ export default async function AdminPropertyPage() {
           initialAccentColor={
             (hotelGroup?.branding as { accentColor?: string } | undefined)?.accentColor ?? '#a8894e'
           }
+        />
+      </div>
+
+      <div className="mt-16 border-t hairline pt-8">
+        <p className="eyebrow mb-6">Website content</p>
+        <WebsiteContentForm
+          initialHeroEyebrow={websiteContent?.hero_eyebrow ?? ''}
+          initialHeroTitle={websiteContent?.hero_title ?? ''}
+          initialHeroSubtitle={websiteContent?.hero_subtitle ?? ''}
+          initialFooterText={websiteContent?.footer_text ?? ''}
         />
       </div>
 
