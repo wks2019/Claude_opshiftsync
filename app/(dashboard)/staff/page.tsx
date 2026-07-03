@@ -53,6 +53,18 @@ export default async function StaffTodayPage() {
         {profile?.full_name ? `Welcome back, ${profile.full_name}` : 'Welcome'}
       </h1>
 
+      {(recentSessions?.length ?? 0) === 0 && (certificateCount ?? 0) === 0 && (
+        <div className="mb-10 border border-brass/30 bg-paper-raised p-6">
+          <p className="display mb-2 text-lg text-ink">First time here? Here is how it works.</p>
+          <p className="text-sm text-ink-soft">
+            Start with a course to learn your property's standards. Then play through a simulation
+            to practise a real guest scenario. Your scores build into an Audit Ledger, and when
+            you are ready, your manager issues a certificate. Everything begins with the first
+            scenario below.
+          </p>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 gap-6 border-t hairline pt-6 sm:grid-cols-3">
         <Link href="/staff/courses" className="block">
           <p className="data text-3xl text-ink">{courseCount ?? 0}</p>

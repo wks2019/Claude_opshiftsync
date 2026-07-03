@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/services/supabase/server'
 import { SimulationEditor } from '@/components/simulation-editor'
+import { Breadcrumb } from '@/components/ui/breadcrumb'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -39,12 +40,12 @@ export default async function SimulationEditPage({ params }: PageProps) {
 
   return (
     <section className="max-w-xl">
-      <Link
-        href="/admin/cms"
-        className="eyebrow mb-6 inline-block text-stone transition-colors hover:text-ink"
-      >
-        ← Content
-      </Link>
+      <Breadcrumb
+        items={[
+          { label: 'Courses & Simulations', href: '/admin/cms' },
+          { label: simulation.title },
+        ]}
+      />
       <p className="eyebrow mb-2">Simulation</p>
       <h1 className="display mb-10 text-2xl text-ink">{simulation.title}</h1>
 

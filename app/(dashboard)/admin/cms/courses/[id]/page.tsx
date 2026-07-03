@@ -4,6 +4,7 @@ import { createClient } from '@/services/supabase/server'
 import { CourseEditor } from '@/components/course-editor'
 import { CourseContentEditor } from '@/components/course-content-editor'
 import { IssueCertificateForm } from '@/components/issue-certificate-form'
+import { Breadcrumb } from '@/components/ui/breadcrumb'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -63,12 +64,12 @@ export default async function CourseDetailPage({ params }: PageProps) {
 
   return (
     <section className="max-w-xl">
-      <Link
-        href="/admin/cms"
-        className="eyebrow mb-6 inline-block text-stone transition-colors hover:text-ink"
-      >
-        ← Content
-      </Link>
+      <Breadcrumb
+        items={[
+          { label: 'Courses & Simulations', href: '/admin/cms' },
+          { label: course.title },
+        ]}
+      />
       <p className="eyebrow mb-2">Course</p>
       <h1 className="display mb-10 text-2xl text-ink">{course.title}</h1>
 

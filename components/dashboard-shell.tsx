@@ -29,8 +29,8 @@ const NAV: Record<AppRole, NavItem[]> = {
   ],
   administrator: [
     { href: '/admin', label: 'Overview' },
-    { href: '/admin/cms', label: 'Content' },
-    { href: '/admin/standards-engine', label: 'Standards' },
+    { href: '/admin/cms', label: 'Courses & Simulations' },
+    { href: '/admin/standards-engine', label: 'SOPs & Standards' },
     { href: '/admin/media-library', label: 'Media' },
     { href: '/admin/user-management', label: 'People' },
     { href: '/admin/tenant-settings', label: 'Property' },

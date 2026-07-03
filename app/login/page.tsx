@@ -83,6 +83,10 @@ function LoginForm() {
           Sign in
         </Button>
       </form>
+
+      <p className="mt-8 text-sm text-stone">
+        Your account is created by your property administrator. No account yet? Speak to your manager.
+      </p>
     </main>
   )
 }

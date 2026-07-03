@@ -52,7 +52,7 @@ export default async function AdminContentPage() {
           <SimulationsList simulations={simulations ?? []} />
           <Link
             href="/admin/cms/simulations/new"
-            className="eyebrow mt-6 inline-block border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass"
+            className="mt-6 inline-block border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper"
           >
             New simulation
           </Link>
