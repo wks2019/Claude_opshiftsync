@@ -17,9 +17,9 @@ export function FieldHint({ example }: FieldHintProps) {
         onClick={() => setIsOpen((open) => !open)}
         aria-expanded={isOpen}
         aria-label="Show example"
-        className="flex h-4 w-4 items-center justify-center border border-stone text-[10px] leading-none text-stone transition-colors hover:border-brass hover:text-brass"
+        className="flex h-4 w-4 items-center justify-center border border-stone font-serif text-[10px] italic leading-none text-stone transition-colors hover:border-brass hover:text-brass"
       >
-        ?
+        i
       </button>
       {isOpen && (
         <span
