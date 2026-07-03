@@ -9,6 +9,7 @@
 -- of these four tables before this migration.
 -- =============================================================================
 
+drop policy if exists course_modules_insert on course_modules;
 create policy course_modules_insert on course_modules
   for insert with check (
     course_id in (
@@ -17,6 +18,7 @@ create policy course_modules_insert on course_modules
     )
   );
 
+drop policy if exists course_modules_update on course_modules;
 create policy course_modules_update on course_modules
   for update using (
     course_id in (
@@ -25,6 +27,7 @@ create policy course_modules_update on course_modules
     )
   );
 
+drop policy if exists course_modules_delete on course_modules;
 create policy course_modules_delete on course_modules
   for delete using (
     course_id in (
@@ -33,6 +36,7 @@ create policy course_modules_delete on course_modules
     )
   );
 
+drop policy if exists lessons_insert on lessons;
 create policy lessons_insert on lessons
   for insert with check (
     course_module_id in (
@@ -42,6 +46,7 @@ create policy lessons_insert on lessons
     )
   );
 
+drop policy if exists lessons_update on lessons;
 create policy lessons_update on lessons
   for update using (
     course_module_id in (
@@ -51,6 +56,7 @@ create policy lessons_update on lessons
     )
   );
 
+drop policy if exists lessons_delete on lessons;
 create policy lessons_delete on lessons
   for delete using (
     course_module_id in (
@@ -60,6 +66,7 @@ create policy lessons_delete on lessons
     )
   );
 
+drop policy if exists quizzes_insert on quizzes;
 create policy quizzes_insert on quizzes
   for insert with check (
     lesson_id in (
@@ -70,6 +77,7 @@ create policy quizzes_insert on quizzes
     )
   );
 
+drop policy if exists quizzes_update on quizzes;
 create policy quizzes_update on quizzes
   for update using (
     lesson_id in (
@@ -80,6 +88,7 @@ create policy quizzes_update on quizzes
     )
   );
 
+drop policy if exists quiz_questions_insert on quiz_questions;
 create policy quiz_questions_insert on quiz_questions
   for insert with check (
     quiz_id in (
@@ -91,6 +100,7 @@ create policy quiz_questions_insert on quiz_questions
     )
   );
 
+drop policy if exists quiz_questions_update on quiz_questions;
 create policy quiz_questions_update on quiz_questions
   for update using (
     quiz_id in (
@@ -102,6 +112,7 @@ create policy quiz_questions_update on quiz_questions
     )
   );
 
+drop policy if exists quiz_questions_delete on quiz_questions;
 create policy quiz_questions_delete on quiz_questions
   for delete using (
     quiz_id in (
