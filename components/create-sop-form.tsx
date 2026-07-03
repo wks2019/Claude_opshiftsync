@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/toast-provider'
 import { Button } from '@/components/ui/button'
 import { Input, Textarea } from '@/components/ui/input'
+import { FieldHint } from '@/components/ui/field-hint'
 
 export function CreateSopForm() {
   const router = useRouter()
@@ -55,6 +56,7 @@ export function CreateSopForm() {
       <div>
         <label htmlFor="sopTitle" className="eyebrow mb-1.5 block">
           Title
+          <FieldHint example="In-Room Dining: Breakfast Delivery" />
         </label>
         <Input
           id="sopTitle"
@@ -67,6 +69,7 @@ export function CreateSopForm() {
       <div>
         <label htmlFor="sopSteps" className="eyebrow mb-1.5 block">
           Steps (one per line)
+          <FieldHint example={'Knock and announce before entering\nGreet the guest by name\nConfirm the order matches the ticket\nSet the tray before opening curtains or adjusting lighting'} />
         </label>
         <Textarea
           id="sopSteps"

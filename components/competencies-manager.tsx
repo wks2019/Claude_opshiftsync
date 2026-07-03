@@ -6,6 +6,7 @@ import { useToast } from '@/components/toast-provider'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
+import { FieldHint } from '@/components/ui/field-hint'
 
 interface CompetencyRow {
   id: string
@@ -84,12 +85,29 @@ export function CompetenciesManager({ competencies, standards, weights }: Compet
         </ol>
 
         <form onSubmit={addCompetency} className="space-y-4">
-          <Input required placeholder="Competency name" value={name} onChange={(e) => setName(e.target.value)} />
-          <Input
-            placeholder="Description (optional)"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <div>
+            <label htmlFor="competencyName" className="eyebrow mb-1.5 block">
+              Competency name
+              <FieldHint example="Guest Recovery" />
+            </label>
+            <Input
+              id="competencyName"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="competencyDescription" className="eyebrow mb-1.5 block">
+              Description (optional)
+              <FieldHint example="Turning a service failure into a moment the guest remembers positively." />
+            </label>
+            <Input
+              id="competencyDescription"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
           {error && (
             <p role="alert" className="text-sm text-claret">
               {error}
