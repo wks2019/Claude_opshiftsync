@@ -593,6 +593,29 @@ export type Database = {
         Update: Partial<Database['public']['Tables']['rate_limits']['Row']>
         Relationships: []
       }
+      media_assets: {
+        Row: {
+          id: string
+          hotel_group_id: string
+          storage_path: string
+          file_name: string
+          mime_type: string
+          size_bytes: number
+          folder: string
+          tags: string[]
+          uploaded_by: string | null
+          created_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['media_assets']['Row']> & {
+          hotel_group_id: string
+          storage_path: string
+          file_name: string
+          mime_type: string
+          size_bytes: number
+        }
+        Update: Partial<Database['public']['Tables']['media_assets']['Row']>
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           id: string

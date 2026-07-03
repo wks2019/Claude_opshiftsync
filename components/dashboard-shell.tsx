@@ -31,6 +31,7 @@ const NAV: Record<AppRole, NavItem[]> = {
     { href: '/admin', label: 'Overview' },
     { href: '/admin/cms', label: 'Content' },
     { href: '/admin/standards-engine', label: 'Standards' },
+    { href: '/admin/media-library', label: 'Media' },
     { href: '/admin/user-management', label: 'People' },
     { href: '/admin/tenant-settings', label: 'Property' },
   ],
