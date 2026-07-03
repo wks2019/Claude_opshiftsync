@@ -68,7 +68,7 @@ export function CourseEditor({
               variant="subtle"
               tone="sage"
               disabled={isSaving}
-              onClick={() => save({ status: 'published' })}
+              onClick={() => { if (confirm('Publishing makes this course visible to all staff immediately. Publish?')) save({ status: 'published' }) }}
             >
               Publish
             </Button>

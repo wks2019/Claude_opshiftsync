@@ -55,6 +55,7 @@ export default async function ManagerTeamPage() {
           <div className="mt-12 grid gap-10 border-t hairline pt-8 sm:grid-cols-2">
             {rollup.map((row) => (
               <div key={row.user_id}>
+                <p className="display mb-1 text-lg text-ink">{row.full_name ?? 'Team member'}</p>
                 <p className="eyebrow mb-3">
                   {row.simulations_completed} simulation{row.simulations_completed === 1 ? '' : 's'}{' '}
                   completed

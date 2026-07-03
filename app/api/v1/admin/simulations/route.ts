@@ -36,7 +36,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       .single()
 
     if (!profile) {
-      throw new ApiError('INTERNAL_ERROR', 'Could not resolve caller hotel group', 500)
+      throw new ApiError('INTERNAL_ERROR', 'Something went wrong on our side. Sign out and back in, then try again', 500)
     }
 
     const { data, error } = await supabase

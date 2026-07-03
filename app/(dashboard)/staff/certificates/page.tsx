@@ -20,7 +20,7 @@ export default async function StaffCertificatesPage() {
       <h1 className="display mb-8 text-2xl text-ink">Your certificates</h1>
 
       {!certificates || certificates.length === 0 ? (
-        <p className="text-stone">Nothing issued yet. Certificates appear here once earned.</p>
+        <p className="text-stone">No certificates yet. They appear here when your manager issues one after a completed course.</p>
       ) : (
         <ol>
           {certificates.map((cert) => {

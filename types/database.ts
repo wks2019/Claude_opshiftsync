@@ -674,6 +674,7 @@ export type Database = {
         Args: Record<string, never>
         Returns: {
           user_id: string
+          full_name?: string | null
           hotel_group_id: string
           hotel_id: string | null
           department_id: string | null

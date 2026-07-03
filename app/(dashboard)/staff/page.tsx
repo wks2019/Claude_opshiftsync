@@ -32,6 +32,20 @@ export default async function StaffTodayPage() {
     .select('*', { count: 'exact', head: true })
     .eq('status', 'published')
 
+  // Your path: the first published simulation this person has not attempted.
+  const { data: publishedSims } = await supabase
+    .from('simulations')
+    .select('id, title')
+    .eq('status', 'published')
+    .order('created_at', { ascending: true })
+
+  const { data: attempted } = user
+    ? await supabase.from('simulation_sessions').select('simulation_id').eq('user_id', user.id)
+    : { data: [] }
+
+  const attemptedIds = new Set((attempted ?? []).map((s) => s.simulation_id))
+  const nextSimulation = (publishedSims ?? []).find((s) => !attemptedIds.has(s.id))
+
   return (
     <section className="fade-in">
       <p className="eyebrow mb-2">Today</p>
@@ -49,6 +63,22 @@ export default async function StaffTodayPage() {
           <p className="eyebrow mt-1 transition-colors hover:text-brass">Certificates earned</p>
         </Link>
       </div>
+
+      {nextSimulation && (
+        <div className="mt-10 border-t hairline pt-6">
+          <p className="eyebrow mb-3">Your path</p>
+          <Link
+            href={`/staff/simulations/${nextSimulation.id}`}
+            className="block border hairline p-5 transition-colors hover:border-brass"
+          >
+            <p className="eyebrow mb-1 text-brass">Next scenario</p>
+            <p className="text-ink-soft">{nextSimulation.title}</p>
+            <p className="mt-1 text-sm text-stone">
+              You have not played this one yet. Complete it to build your Audit Ledger.
+            </p>
+          </Link>
+        </div>
+      )}
 
       <div className="mt-10 border-t hairline pt-6">
         <p className="eyebrow mb-3">Continue</p>

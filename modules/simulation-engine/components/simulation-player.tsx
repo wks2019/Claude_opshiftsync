@@ -98,12 +98,20 @@ export function SimulationPlayer({ sessionId, title, initialState }: SimulationP
         <div className="mt-10">
           <AuditLedger result={result} finalScore={result.finalScore} />
         </div>
-        <a
-          href="/staff/simulations"
-          className="mt-10 inline-block border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass"
-        >
-          Return to simulations
-        </a>
+        <div className="mt-10 flex items-baseline gap-8">
+          <a
+            href=""
+            className="border border-ink px-5 py-2 text-ink transition-colors hover:bg-ink hover:text-paper"
+          >
+            Try again
+          </a>
+          <a
+            href="/staff/simulations"
+            className="border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass"
+          >
+            Return to simulations
+          </a>
+        </div>
       </section>
     )
   }

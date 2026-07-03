@@ -88,6 +88,12 @@ export default async function HomePage() {
           {copy.heroSubtitle}
         </p>
         <div className="mt-10 flex items-center justify-center gap-6">
+          <a
+            href="mailto:hello@chosenworkflow.com?subject=Demo request"
+            className="border border-ink bg-ink px-6 py-2.5 text-paper transition-colors hover:bg-transparent hover:text-ink"
+          >
+            Request a demo
+          </a>
           <Link
             href="/login"
             className="border border-ink px-6 py-2.5 text-ink transition-colors hover:bg-ink hover:text-paper"
@@ -139,8 +145,21 @@ export default async function HomePage() {
       </section>
 
       <footer className="border-t hairline">
-        <div className="mx-auto flex max-w-6xl items-baseline justify-between px-6 py-8">
-          <span className="eyebrow">{copy.footerText}</span>
+        <div className="mx-auto max-w-6xl px-6 py-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-baseline sm:justify-between">
+            <div>
+              <p className="eyebrow">{copy.footerText}</p>
+              <p className="mt-2 max-w-xs text-sm text-stone">
+                Training built for the standards your inspectors actually measure.
+              </p>
+            </div>
+            <a
+              href="mailto:hello@chosenworkflow.com"
+              className="eyebrow border-b border-transparent pb-0.5 text-ink transition-colors hover:border-brass"
+            >
+              Contact
+            </a>
+          </div>
         </div>
       </footer>
     </main>

@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input, Select } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
+import { FieldHint } from '@/components/ui/field-hint'
 
 interface IssueCertificateFormProps {
   courseId: string
@@ -101,6 +102,7 @@ export function IssueCertificateForm({ courseId }: IssueCertificateFormProps) {
       <div>
         <label htmlFor="certExpiry" className="eyebrow mb-1.5 block">
           Expiry
+          <FieldHint example="Most properties recertify annually. Choose Never for one-off recognitions that do not lapse." />
         </label>
         <Select
           id="certExpiry"

@@ -8,6 +8,7 @@ import { useToast } from '@/components/toast-provider'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
+import { FieldHint } from '@/components/ui/field-hint'
 
 interface MediaAsset {
   id: string
@@ -111,6 +112,7 @@ export function MediaLibrary({ assets, hotelGroupId }: MediaLibraryProps) {
         <div>
           <label htmlFor="uploadFolder" className="eyebrow mb-1.5 block">
             Folder
+            <FieldHint example="A label to group files, for example logos, room-photos, menus. Type a new name to create a new folder." />
           </label>
           <Input
             id="uploadFolder"
@@ -152,7 +154,7 @@ export function MediaLibrary({ assets, hotelGroupId }: MediaLibraryProps) {
       )}
 
       {visibleAssets.length === 0 ? (
-        <p className="text-stone">No files yet.</p>
+        <p className="text-stone">No files yet. Upload a logo, room photo, or menu to start your library.</p>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {visibleAssets.map((asset) => (

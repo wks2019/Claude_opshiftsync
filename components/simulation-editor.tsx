@@ -6,6 +6,7 @@ import { useToast } from '@/components/toast-provider'
 import { Button } from '@/components/ui/button'
 import { Input, Select, Textarea } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
+import { FieldHint } from '@/components/ui/field-hint'
 
 interface StateRow {
   id: string
@@ -155,7 +156,7 @@ export function SimulationEditor({
         <span className="eyebrow">{status}</span>
         <div className="flex gap-4">
           {status !== 'published' && (
-            <Button variant="subtle" tone="sage" disabled={isBusy} onClick={() => setStatus('published')}>
+            <Button variant="subtle" tone="sage" disabled={isBusy} onClick={() => { if (confirm('Publishing makes this simulation visible to all staff immediately. Publish?')) setStatus('published') }}>
               Publish
             </Button>
           )}
@@ -307,27 +308,33 @@ export function SimulationEditor({
             value={choiceMoodShift}
             onChange={(event) => setChoiceMoodShift(event.target.value)}
           />
-          <div className="grid grid-cols-4 gap-3">
-            {[
-              ['Forbes', forbesDelta, setForbesDelta],
-              ['LQA', lqaDelta, setLqaDelta],
-              ['SOP', sopDelta, setSopDelta],
-              ['EI', eiDelta, setEiDelta],
-            ].map(([label, value, setter]) => (
-              <div key={label as string}>
-                <label className="eyebrow mb-1 block">{label as string}</label>
-                <Input
-                  type="number"
-                  min={0}
-                  max={25}
-                  value={value as number}
-                  onChange={(event) =>
-                    (setter as (n: number) => void)(Number(event.target.value))
-                  }
-                  dense
-                />
-              </div>
-            ))}
+          <div>
+            <p className="eyebrow mb-1.5">
+              Score impact
+              <FieldHint example="Points this choice earns per dimension, 0 to 25. The best choice in a state should score highest; a poor choice can score 0. Example: a warm, by-the-book recovery might be Forbes 20, LQA 18, SOP 22, EI 20." />
+            </p>
+            <div className="grid grid-cols-4 gap-3">
+              {[
+                ['Forbes', forbesDelta, setForbesDelta],
+                ['LQA', lqaDelta, setLqaDelta],
+                ['SOP', sopDelta, setSopDelta],
+                ['EI', eiDelta, setEiDelta],
+              ].map(([label, value, setter]) => (
+                <div key={label as string}>
+                  <label className="eyebrow mb-1 block">{label as string}</label>
+                  <Input
+                    type="number"
+                    min={0}
+                    max={25}
+                    value={value as number}
+                    onChange={(event) =>
+                      (setter as (n: number) => void)(Number(event.target.value))
+                    }
+                    dense
+                  />
+                </div>
+              ))}
+            </div>
           </div>
           <Button type="submit" disabled={isBusy}>
             Add choice

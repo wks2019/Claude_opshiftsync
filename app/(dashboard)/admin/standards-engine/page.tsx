@@ -45,7 +45,7 @@ export default async function AdminStandardsPage() {
               </li>
             ))}
             {(!sops || sops.length === 0) && (
-              <li className="border-t hairline py-3 text-stone">No SOPs yet.</li>
+              <li className="border-t hairline py-3 text-stone">No SOPs yet. Create your first standard with the form opposite.</li>
             )}
             <li className="border-t hairline" aria-hidden="true" />
           </ol>

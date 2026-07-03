@@ -63,13 +63,35 @@ export default async function AdminPropertyPage() {
       <p className="eyebrow mb-2">Property</p>
       <h1 className="display mb-10 text-2xl text-ink">Settings</h1>
 
-      {hotelGroup ? (
-        <PropertyNameForm initialName={hotelGroup.name} />
-      ) : (
-        <p className="text-stone">Could not load property settings.</p>
-      )}
+      <nav aria-label="Settings sections" className="mb-12">
+        <ul className="flex flex-wrap gap-6">
+          {[
+            ['#identity', 'Identity'],
+            ['#branding', 'Branding'],
+            ['#website', 'Website'],
+            ['#structure', 'Structure'],
+          ].map(([href, label]) => (
+            <li key={href}>
+              <a
+                href={href}
+                className="eyebrow border-b border-transparent pb-1 text-stone transition-colors hover:border-brass hover:text-ink"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-      <div className="mt-16 border-t hairline pt-8">
+      <div id="identity">
+        {hotelGroup ? (
+          <PropertyNameForm initialName={hotelGroup.name} />
+        ) : (
+          <p className="text-stone">Could not load property settings.</p>
+        )}
+      </div>
+
+      <div id="branding" className="mt-16 scroll-mt-6 border-t hairline pt-8">
         <p className="eyebrow mb-6">Branding</p>
         <BrandingForm
           initialLogoUrl={(hotelGroup?.branding as { logoUrl?: string } | undefined)?.logoUrl ?? ''}
@@ -79,7 +101,7 @@ export default async function AdminPropertyPage() {
         />
       </div>
 
-      <div className="mt-16 border-t hairline pt-8">
+      <div id="website" className="mt-16 scroll-mt-6 border-t hairline pt-8">
         <p className="eyebrow mb-6">Website content</p>
         <WebsiteContentForm
           initialHeroEyebrow={websiteContent?.hero_eyebrow ?? ''}
@@ -89,7 +111,7 @@ export default async function AdminPropertyPage() {
         />
       </div>
 
-      <div className="mt-16 border-t hairline pt-8">
+      <div id="structure" className="mt-16 scroll-mt-6 border-t hairline pt-8">
         <p className="eyebrow mb-6">Hotels, departments, and teams</p>
         <HotelsManager
           hotels={hotels ?? []}

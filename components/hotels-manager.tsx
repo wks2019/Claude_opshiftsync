@@ -77,7 +77,7 @@ export function HotelsManager({ hotels, departments, teams }: HotelsManagerProps
         </Card>
       ))}
 
-      {hotels.length === 0 && <p className="text-stone">No hotels yet.</p>}
+      {hotels.length === 0 && <p className="text-stone">No hotels yet. Add your first property below.</p>}
 
       {error && (
         <p role="alert" className="text-sm text-claret">

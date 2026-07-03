@@ -20,7 +20,7 @@ export function SimulationsList({ simulations }: { simulations: SimulationRow[] 
         <SimulationListItem key={sim.id} simulation={sim} />
       ))}
       {simulations.length === 0 && (
-        <li className="border-t hairline py-3 text-stone">No simulations yet.</li>
+        <li className="border-t hairline py-3 text-stone">No simulations yet. Create one below to give your team a scenario to practise.</li>
       )}
       <li className="border-t hairline" aria-hidden="true" />
     </ol>

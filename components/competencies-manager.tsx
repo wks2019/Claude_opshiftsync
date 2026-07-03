@@ -79,7 +79,7 @@ export function CompetenciesManager({ competencies, standards, weights }: Compet
             </li>
           ))}
           {competencies.length === 0 && (
-            <li className="border-t hairline py-3 text-stone">No competencies yet.</li>
+            <li className="border-t hairline py-3 text-stone">No competencies yet. Add your first with the form below.</li>
           )}
           <li className="border-t hairline" aria-hidden="true" />
         </ol>
