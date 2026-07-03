@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Hanken+Grotesk:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap');
-
 @import 'tailwindcss';
 
 @theme {
@@ -14,9 +12,9 @@
   --color-claret: #7a2e2e;
   --color-sage: #547060;
 
-  --font-display: 'Marcellus', serif;
-  --font-body: 'Hanken Grotesk', sans-serif;
-  --font-data: 'Spline Sans Mono', monospace;
+  --font-display: var(--font-marcellus), serif;
+  --font-body: var(--font-hanken-grotesk), sans-serif;
+  --font-data: var(--font-spline-mono), monospace;
 }
 
 @layer base {
