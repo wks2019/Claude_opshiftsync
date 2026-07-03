@@ -30,7 +30,7 @@ const DEMO_FINAL = 96.9
 
 export default function HomePage() {
   return (
-    <main>
+    <main id="main-content">
       <header className="border-b hairline">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
           <span>

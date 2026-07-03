@@ -154,7 +154,7 @@ export function DashboardShell({ role, propertyName, children }: DashboardShellP
         )}
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
+      <main id="main-content" className="mx-auto max-w-6xl px-6 py-10">{children}</main>
     </div>
   )
 }
