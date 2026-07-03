@@ -690,6 +690,19 @@ export type Database = {
           last_simulation_at: string | null
         }[]
       }
+      get_module_progress: {
+        Args: Record<string, never>
+        Returns: {
+          course_module_id: string
+          course_id: string
+          title: string
+          sequence: number
+          total_lessons: number
+          completed_lessons: number
+          percent_complete: number
+          status: string
+        }[]
+      }
     }
     Enums: Record<string, never>
   }
