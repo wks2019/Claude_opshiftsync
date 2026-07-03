@@ -75,6 +75,27 @@ export async function parseBody<T>(request: Request, schema: ZodSchema<T>): Prom
   return schema.parse(raw)
 }
 
+/**
+ * Resolves the authenticated user's role and throws FORBIDDEN if they
+ * are not an administrator. Was duplicated verbatim across 21 admin API
+ * route files (RC1 Section 9 refactor), extracted here as the one copy.
+ */
+export async function requireAdminSupabase(userId: string) {
+  const supabase = await createClient()
+  const { data: callerRole } = await supabase
+    .from('user_roles')
+    .select('roles(name)')
+    .eq('user_id', userId)
+    .limit(1)
+    .maybeSingle()
+
+  const isAdmin = (callerRole?.roles as { name?: string } | null)?.name === 'administrator'
+  if (!isAdmin) {
+    throw new ApiError('FORBIDDEN', 'Only administrators may perform this action', 403)
+  }
+  return supabase
+}
+
 export interface AuthContext {
   userId: string
 }

@@ -1,25 +1,8 @@
 import { NextResponse } from 'next/server'
-import { handle, ok, requireUser, ApiError } from '@/app/api/v1/_lib/api-helpers'
-import { createClient } from '@/services/supabase/server'
+import { handle, ok, requireUser, ApiError, requireAdminSupabase } from '@/app/api/v1/_lib/api-helpers'
 
 interface RouteParams {
   params: Promise<{ id: string }>
-}
-
-async function requireAdminSupabase(userId: string) {
-  const supabase = await createClient()
-  const { data: callerRole } = await supabase
-    .from('user_roles')
-    .select('roles(name)')
-    .eq('user_id', userId)
-    .limit(1)
-    .maybeSingle()
-
-  const isAdmin = (callerRole?.roles as { name?: string } | null)?.name === 'administrator'
-  if (!isAdmin) {
-    throw new ApiError('FORBIDDEN', 'Only administrators may author simulations', 403)
-  }
-  return supabase
 }
 
 /**

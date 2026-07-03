@@ -1,38 +1,11 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { handle, ok, parseBody, requireUser, ApiError } from '@/app/api/v1/_lib/api-helpers'
-import { createClient } from '@/services/supabase/server'
+import { handle, ok, parseBody, requireUser, ApiError, requireAdminSupabase } from '@/app/api/v1/_lib/api-helpers'
 
 const bodySchema = z.object({
   title: z.string().min(1),
   steps: z.array(z.string().min(1)).min(1),
 })
-
-async function requireAdminSupabase(userId: string) {
-  const supabase = await createClient()
-  const { data: callerRole } = await supabase
-    .from('user_roles')
-    .select('roles(name)')
-    .eq('user_id', userId)
-    .limit(1)
-    .maybeSingle()
-
-  const isAdmin = (callerRole?.roles as { name?: string } | null)?.name === 'administrator'
-  if (!isAdmin) {
-    throw new ApiError('FORBIDDEN', 'Only administrators may manage SOPs', 403)
-  }
-
-  const { data: profile } = await supabase
-    .from('users')
-    .select('hotel_group_id')
-    .eq('id', userId)
-    .single()
-
-  if (!profile) {
-    throw new ApiError('INTERNAL_ERROR', 'Caller profile not found', 500)
-  }
-  return { supabase, hotelGroupId: profile.hotel_group_id }
-}
 
 /**
  * POST /api/v1/admin/sops
@@ -41,12 +14,22 @@ async function requireAdminSupabase(userId: string) {
 export async function POST(request: Request): Promise<NextResponse> {
   return handle(async () => {
     const { userId } = await requireUser()
-    const { supabase, hotelGroupId } = await requireAdminSupabase(userId)
+    const supabase = await requireAdminSupabase(userId)
     const body = await parseBody(request, bodySchema)
+
+    const { data: profile } = await supabase
+      .from('users')
+      .select('hotel_group_id')
+      .eq('id', userId)
+      .single()
+
+    if (!profile) {
+      throw new ApiError('INTERNAL_ERROR', 'Could not resolve caller hotel group', 500)
+    }
 
     const { data: sop, error: sopError } = await supabase
       .from('sops')
-      .insert({ hotel_group_id: hotelGroupId, title: body.title })
+      .insert({ hotel_group_id: profile.hotel_group_id, title: body.title })
       .select('id, title')
       .single()
 

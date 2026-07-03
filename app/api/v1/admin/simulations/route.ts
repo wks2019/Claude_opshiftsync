@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { handle, ok, parseBody, requireUser, ApiError } from '@/app/api/v1/_lib/api-helpers'
-import { createClient } from '@/services/supabase/server'
+import { handle, ok, parseBody, requireUser, ApiError, requireAdminSupabase } from '@/app/api/v1/_lib/api-helpers'
 
 const bodySchema = z.object({
   title: z.string().min(1),
@@ -17,32 +16,6 @@ const bodySchema = z.object({
   difficulty: z.enum(['standard', 'advanced', 'vip']),
 })
 
-async function requireAdminSupabase(userId: string) {
-  const supabase = await createClient()
-  const { data: callerRole } = await supabase
-    .from('user_roles')
-    .select('roles(name)')
-    .eq('user_id', userId)
-    .limit(1)
-    .maybeSingle()
-
-  const isAdmin = (callerRole?.roles as { name?: string } | null)?.name === 'administrator'
-  if (!isAdmin) {
-    throw new ApiError('FORBIDDEN', 'Only administrators may author simulations', 403)
-  }
-
-  const { data: profile } = await supabase
-    .from('users')
-    .select('hotel_group_id')
-    .eq('id', userId)
-    .single()
-
-  if (!profile) {
-    throw new ApiError('INTERNAL_ERROR', 'Caller profile not found', 500)
-  }
-  return { supabase, hotelGroupId: profile.hotel_group_id }
-}
-
 /**
  * POST /api/v1/admin/simulations
  * Creates a draft simulation shell with no states. States and choices
@@ -53,13 +26,23 @@ async function requireAdminSupabase(userId: string) {
 export async function POST(request: Request): Promise<NextResponse> {
   return handle(async () => {
     const { userId } = await requireUser()
-    const { supabase, hotelGroupId } = await requireAdminSupabase(userId)
+    const supabase = await requireAdminSupabase(userId)
     const body = await parseBody(request, bodySchema)
+
+    const { data: profile } = await supabase
+      .from('users')
+      .select('hotel_group_id')
+      .eq('id', userId)
+      .single()
+
+    if (!profile) {
+      throw new ApiError('INTERNAL_ERROR', 'Could not resolve caller hotel group', 500)
+    }
 
     const { data, error } = await supabase
       .from('simulations')
       .insert({
-        hotel_group_id: hotelGroupId,
+        hotel_group_id: profile.hotel_group_id,
         title: body.title,
         type: body.type,
         difficulty: body.difficulty,
