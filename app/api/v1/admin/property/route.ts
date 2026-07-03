@@ -4,7 +4,13 @@ import { handle, ok, parseBody, requireUser, ApiError } from '@/app/api/v1/_lib/
 import { createClient } from '@/services/supabase/server'
 
 const bodySchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1).optional(),
+  branding: z
+    .object({
+      logoUrl: z.string().url().optional(),
+      accentColor: z.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+    })
+    .optional(),
 })
 
 /**
@@ -41,11 +47,28 @@ export async function PATCH(request: Request): Promise<NextResponse> {
 
     const body = await parseBody(request, bodySchema)
 
+    const patch: Partial<{ name: string; branding: Record<string, unknown> }> = {}
+    if (body.name !== undefined) patch.name = body.name
+
+    if (body.branding !== undefined) {
+      const { data: current } = await supabase
+        .from('hotel_groups')
+        .select('branding')
+        .eq('id', profile.hotel_group_id)
+        .single()
+
+      patch.branding = { ...(current?.branding ?? {}), ...body.branding }
+    }
+
+    if (Object.keys(patch).length === 0) {
+      throw new ApiError('VALIDATION_ERROR', 'No fields to update', 400)
+    }
+
     const { data, error } = await supabase
       .from('hotel_groups')
-      .update({ name: body.name })
+      .update(patch)
       .eq('id', profile.hotel_group_id)
-      .select('id, name')
+      .select('id, name, branding')
       .single()
 
     if (error || !data) {

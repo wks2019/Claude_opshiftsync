@@ -1,6 +1,7 @@
 import { createClient } from '@/services/supabase/server'
 import { PropertyNameForm } from '@/components/property-name-form'
 import { HotelsManager } from '@/components/hotels-manager'
+import { BrandingForm } from '@/components/branding-form'
 
 export default async function AdminPropertyPage() {
   const supabase = await createClient()
@@ -13,7 +14,11 @@ export default async function AdminPropertyPage() {
     : { data: null }
 
   const { data: hotelGroup } = profile
-    ? await supabase.from('hotel_groups').select('id, name').eq('id', profile.hotel_group_id).single()
+    ? await supabase
+        .from('hotel_groups')
+        .select('id, name, branding')
+        .eq('id', profile.hotel_group_id)
+        .single()
     : { data: null }
 
   const { data: hotels } = profile
@@ -58,6 +63,16 @@ export default async function AdminPropertyPage() {
       )}
 
       <div className="mt-16 border-t hairline pt-8">
+        <p className="eyebrow mb-6">Branding</p>
+        <BrandingForm
+          initialLogoUrl={(hotelGroup?.branding as { logoUrl?: string } | undefined)?.logoUrl ?? ''}
+          initialAccentColor={
+            (hotelGroup?.branding as { accentColor?: string } | undefined)?.accentColor ?? '#a8894e'
+          }
+        />
+      </div>
+
+      <div className="mt-16 border-t hairline pt-8">
         <p className="eyebrow mb-6">Hotels, departments, and teams</p>
         <HotelsManager
           hotels={hotels ?? []}
@@ -65,10 +80,6 @@ export default async function AdminPropertyPage() {
           teams={teams ?? []}
         />
       </div>
-
-      <p className="mt-10 max-w-sm text-sm text-stone">
-        Branding (logo, colour palette, typography) is on the way.
-      </p>
     </section>
   )
 }
