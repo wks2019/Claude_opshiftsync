@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { AuditLedger } from '@/components/audit-ledger'
+import { HeroCta } from '@/components/hero-cta'
 import { createPublicClient } from '@/services/supabase/public'
 
 const STEPS = [
@@ -87,20 +88,7 @@ export default async function HomePage() {
         <p className="mx-auto mt-6 max-w-xl text-lg text-ink-soft">
           {copy.heroSubtitle}
         </p>
-        <div className="mt-10 flex items-center justify-center gap-6">
-          <a
-            href="mailto:hello@chosenworkflow.com?subject=Demo request"
-            className="border border-ink bg-ink px-6 py-2.5 text-paper transition-colors hover:bg-transparent hover:text-ink"
-          >
-            Request a demo
-          </a>
-          <Link
-            href="/login"
-            className="border border-ink px-6 py-2.5 text-ink transition-colors hover:bg-ink hover:text-paper"
-          >
-            Sign in
-          </Link>
-        </div>
+        <HeroCta />
       </section>
 
       {/* How it works */}
