@@ -20,6 +20,18 @@ export default async function StaffTodayPage() {
         .limit(3)
     : { data: null }
 
+  const { count: certificateCount } = user
+    ? await supabase
+        .from('certificates')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+    : { count: 0 }
+
+  const { count: courseCount } = await supabase
+    .from('courses')
+    .select('*', { count: 'exact', head: true })
+    .eq('status', 'published')
+
   return (
     <section className="fade-in">
       <p className="eyebrow mb-2">Today</p>
@@ -27,7 +39,18 @@ export default async function StaffTodayPage() {
         {profile?.full_name ? `Welcome back, ${profile.full_name}` : 'Welcome'}
       </h1>
 
-      <div className="border-t hairline pt-6">
+      <div className="grid grid-cols-2 gap-6 border-t hairline pt-6 sm:grid-cols-3">
+        <Link href="/staff/courses" className="block">
+          <p className="data text-3xl text-ink">{courseCount ?? 0}</p>
+          <p className="eyebrow mt-1 transition-colors hover:text-brass">Courses available</p>
+        </Link>
+        <Link href="/staff/certificates" className="block">
+          <p className="data text-3xl text-ink">{certificateCount ?? 0}</p>
+          <p className="eyebrow mt-1 transition-colors hover:text-brass">Certificates earned</p>
+        </Link>
+      </div>
+
+      <div className="mt-10 border-t hairline pt-6">
         <p className="eyebrow mb-3">Continue</p>
         <Link
           href="/staff/simulations"
