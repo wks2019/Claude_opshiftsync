@@ -197,3 +197,51 @@ export async function persistResult(
 
   if (error) throw new Error(`Failed to persist result: ${error.message}`)
 }
+
+/**
+ * After a simulation result is written, score the user against every
+ * competency defined for their tenant. The score per competency is the
+ * session's final_score. This is a flat mapping today: every simulation
+ * contributes to every competency equally. A future refinement could
+ * link specific competencies to specific simulations or weight
+ * dimensions differently per competency. For now, having any data at
+ * all is the unlock that makes the staff competencies page functional.
+ */
+export async function persistCompetencyScores(
+  sessionId: string,
+  userId: string,
+  finalScore: number
+) {
+  const supabase = await createClient()
+
+  const { data: profile } = await supabase
+    .from('users')
+    .select('hotel_group_id')
+    .eq('id', userId)
+    .single()
+
+  if (!profile) return
+
+  const { data: competencies } = await supabase
+    .from('competencies')
+    .select('id')
+    .eq('hotel_group_id', profile.hotel_group_id)
+
+  if (!competencies || competencies.length === 0) return
+
+  const rows = competencies.map((c) => ({
+    user_id: userId,
+    competency_id: c.id,
+    score: finalScore,
+    source_session_id: sessionId,
+  }))
+
+  const { error } = await supabase.from('competency_scores').insert(rows)
+
+  if (error) {
+    // Non-fatal. The simulation result is already saved. Log but do not
+    // throw, so the user still sees their Audit Ledger even if scoring
+    // fails for an infrastructure reason.
+    console.error(`Failed to persist competency scores: ${error.message}`)
+  }
+}
