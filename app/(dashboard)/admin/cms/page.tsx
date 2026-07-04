@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/services/supabase/server'
 import { CreateCourseForm } from '@/components/create-course-form'
 import { SimulationsList } from '@/components/simulations-list'
+import { StatusBadge } from '@/components/ui/status-badge'
 
 export default async function AdminContentPage() {
   const supabase = await createClient()
@@ -21,19 +22,19 @@ export default async function AdminContentPage() {
       <p className="eyebrow mb-2">Content</p>
       <h1 className="display mb-10 text-2xl text-ink">Courses and simulations</h1>
 
-      <div className="grid gap-16 sm:grid-cols-2">
-        <div>
+      <div className="grid gap-8 lg:grid-cols-2">
+        <div className="border hairline bg-paper-raised p-6">
           <p className="eyebrow mb-4">Courses</p>
 
           <ol className="mb-8">
             {(courses ?? []).map((course) => (
-              <li key={course.id} className="border-t hairline py-3">
+              <li key={course.id} className="border-t hairline">
                 <Link
                   href={`/admin/cms/courses/${course.id}`}
-                  className="flex items-baseline justify-between gap-4 transition-colors hover:text-brass"
+                  className="flex items-baseline justify-between gap-4 py-3 transition-colors hover:text-brass"
                 >
                   <span className="text-ink-soft">{course.title}</span>
-                  <span className="eyebrow shrink-0">{course.status}</span>
+                  <StatusBadge status={course.status} />
                 </Link>
               </li>
             ))}
@@ -47,7 +48,7 @@ export default async function AdminContentPage() {
           <CreateCourseForm />
         </div>
 
-        <div>
+        <div className="border hairline bg-paper-raised p-6">
           <p className="eyebrow mb-4">Simulations</p>
           <SimulationsList simulations={simulations ?? []} />
           <Link
