@@ -55,6 +55,20 @@ function createBlock(type: FlexibleBlockType): FlexibleBlock {
   return { id, type: 'media', content: '', alt: '', caption: '' }
 }
 
+type StyleTarget = 'title' | 'standard' | 'procedure' | 'checklist'
+
+interface SectionStyle {
+  fontSize: number
+  textColor: string
+}
+
+const DEFAULT_STYLES: Record<StyleTarget, SectionStyle> = {
+  title: { fontSize: 24, textColor: '#10201b' },
+  standard: { fontSize: 14, textColor: '#10201b' },
+  procedure: { fontSize: 14, textColor: '#10201b' },
+  checklist: { fontSize: 14, textColor: '#10201b' },
+}
+
 export function SopBlockEditor() {
   const router = useRouter()
   const { showToast } = useToast()
@@ -64,6 +78,12 @@ export function SopBlockEditor() {
   const [blocks, setBlocks] = useState<FlexibleBlock[]>([createBlock('procedure')])
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [styleTarget, setStyleTarget] = useState<StyleTarget>('title')
+  const [styles, setStyles] = useState<Record<StyleTarget, SectionStyle>>(DEFAULT_STYLES)
+
+  const currentStyle = styles[styleTarget]
+  const updateCurrentStyle = (patch: Partial<SectionStyle>) =>
+    setStyles((prev) => ({ ...prev, [styleTarget]: { ...prev[styleTarget], ...patch } }))
 
   const addBlock = (type: FlexibleBlockType) => setBlocks((prev) => [...prev, createBlock(type)])
 
@@ -216,11 +236,11 @@ export function SopBlockEditor() {
         return (
           <div key={block.id} className="mb-8">
             <p className="eyebrow mb-3">Procedure</p>
-            <ol className="space-y-3">
+            <ol className="space-y-3" style={{ fontSize: styles.procedure.fontSize, color: styles.procedure.textColor }}>
               {steps.map((step, i) => (
-                <li key={i} className="flex gap-3 text-sm">
+                <li key={i} className="flex gap-3">
                   <span className="data shrink-0 text-brass">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="text-ink-soft">{step}</span>
+                  <span>{step}</span>
                 </li>
               ))}
             </ol>
@@ -233,9 +253,9 @@ export function SopBlockEditor() {
         return (
           <div key={block.id} className="mb-8">
             <p className="eyebrow mb-3">Checklist</p>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2" style={{ fontSize: styles.checklist.fontSize, color: styles.checklist.textColor }}>
               {items.map((item) => (
-                <li key={item.id} className={item.checked ? 'text-stone line-through' : 'text-ink-soft'}>
+                <li key={item.id} className={item.checked ? 'text-stone line-through' : ''}>
                   {item.checked ? '☑' : '☐'} {item.text}
                 </li>
               ))}
@@ -270,6 +290,45 @@ export function SopBlockEditor() {
             <FieldHint example="Breakfast trays are delivered within the confirmed window, silver service, tray presented before curtains or lighting are adjusted." />
           </label>
           <Textarea id="sopStandard" rows={3} required value={standard} onChange={(e) => setStandard(e.target.value)} />
+        </div>
+
+        <div className="border hairline p-4">
+          <p className="eyebrow mb-3">Style</p>
+          <div className="space-y-3">
+            <div>
+              <label className="eyebrow mb-1.5 block">Section</label>
+              <select
+                value={styleTarget}
+                onChange={(e) => setStyleTarget(e.target.value as StyleTarget)}
+                className="w-full border-b hairline bg-transparent py-2 text-ink outline-none focus:border-brass"
+              >
+                <option value="title">Title</option>
+                <option value="standard">Standard</option>
+                <option value="procedure">Procedure</option>
+                <option value="checklist">Checklist</option>
+              </select>
+            </div>
+            <div>
+              <label className="eyebrow mb-1.5 block">Font size ({currentStyle.fontSize}px)</label>
+              <input
+                type="range"
+                min={12}
+                max={36}
+                value={currentStyle.fontSize}
+                onChange={(e) => updateCurrentStyle({ fontSize: parseInt(e.target.value, 10) })}
+                className="w-full accent-brass"
+              />
+            </div>
+            <div className="flex items-center gap-3">
+              <label className="eyebrow">Text colour</label>
+              <input
+                type="color"
+                value={currentStyle.textColor}
+                onChange={(e) => updateCurrentStyle({ textColor: e.target.value })}
+                className="h-7 w-10 cursor-pointer border hairline"
+              />
+            </div>
+          </div>
         </div>
 
         <div>
@@ -318,10 +377,20 @@ export function SopBlockEditor() {
 
       <div className="border hairline bg-paper-raised p-8">
         <p className="eyebrow mb-2">Preview</p>
-        <h2 className="display mb-6 border-b hairline pb-4 text-xl text-ink">{title || 'Untitled standard'}</h2>
+        <h2
+          className="display mb-6 border-b hairline pb-4 text-ink"
+          style={{ fontSize: styles.title.fontSize, color: styles.title.textColor }}
+        >
+          {title || 'Untitled standard'}
+        </h2>
         <div className="mb-8">
           <p className="eyebrow mb-2">Standard</p>
-          <p className="font-display text-sm italic text-ink-soft">{standard || 'No standard set.'}</p>
+          <p
+            className="font-display italic text-ink-soft"
+            style={{ fontSize: styles.standard.fontSize, color: styles.standard.textColor }}
+          >
+            {standard || 'No standard set.'}
+          </p>
         </div>
         {blocks.map(renderBlockPreview)}
       </div>
