@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/services/supabase/server'
-import { CreateSopForm } from '@/components/create-sop-form'
+import { SopBlockEditor } from '@/components/sop-block-editor'
 import { CompetenciesManager } from '@/components/competencies-manager'
 
 export default async function AdminStandardsPage() {
@@ -30,7 +30,7 @@ export default async function AdminStandardsPage() {
       <p className="eyebrow mb-2">Standards</p>
       <h1 className="display mb-10 text-2xl text-ink">SOP library</h1>
 
-      <div className="grid gap-16 sm:grid-cols-2">
+      <div className="grid gap-16 sm:grid-cols-[1fr_2fr]">
         <div>
           <p className="eyebrow mb-4">All SOPs</p>
           <ol>
@@ -45,7 +45,7 @@ export default async function AdminStandardsPage() {
               </li>
             ))}
             {(!sops || sops.length === 0) && (
-              <li className="border-t hairline py-3 text-stone">No SOPs yet. Create your first standard with the form opposite.</li>
+              <li className="border-t hairline py-3 text-stone">No SOPs yet. Create your first standard opposite.</li>
             )}
             <li className="border-t hairline" aria-hidden="true" />
           </ol>
@@ -53,7 +53,7 @@ export default async function AdminStandardsPage() {
 
         <div>
           <p className="eyebrow mb-4">New SOP</p>
-          <CreateSopForm />
+          <SopBlockEditor />
         </div>
       </div>
 

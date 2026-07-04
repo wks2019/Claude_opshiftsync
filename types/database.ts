@@ -382,6 +382,8 @@ export type Database = {
           sop_id: string
           version_number: number
           steps: string[]
+          standard: string | null
+          blocks: unknown
           failure_modes: unknown
           published_at: string | null
         }
