@@ -384,6 +384,7 @@ export type Database = {
           steps: string[]
           standard: string | null
           blocks: unknown
+          meta: unknown
           failure_modes: unknown
           published_at: string | null
         }

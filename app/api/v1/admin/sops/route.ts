@@ -2,12 +2,39 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { handle, ok, parseBody, requireUser, ApiError, requireAdminSupabase } from '@/app/api/v1/_lib/api-helpers'
 
+const procedureStepSchema = z.object({
+  title: z.string(),
+  bullets: z.array(z.string()),
+})
+
 const blockSchema = z.discriminatedUnion('type', [
-  z.object({ id: z.string(), type: z.literal('procedure'), steps: z.array(z.string()) }),
+  z.object({ id: z.string(), type: z.literal('procedure'), steps: z.array(procedureStepSchema) }),
   z.object({
     id: z.string(),
     type: z.literal('checklist'),
     items: z.array(z.object({ id: z.string(), text: z.string(), checked: z.boolean() })),
+  }),
+  z.object({
+    id: z.string(),
+    type: z.literal('table'),
+    headers: z.array(z.string()).min(1),
+    rows: z.array(z.array(z.string())),
+  }),
+  z.object({
+    id: z.string(),
+    type: z.literal('rating'),
+    items: z.array(z.object({ id: z.string(), label: z.string(), stars: z.number().int().min(1).max(5) })),
+  }),
+  z.object({
+    id: z.string(),
+    type: z.literal('field'),
+    items: z.array(
+      z.object({
+        id: z.string(),
+        label: z.string(),
+        fieldType: z.enum(['text', 'date', 'time', 'number', 'signature']),
+      })
+    ),
   }),
   z.object({
     id: z.string(),
@@ -18,18 +45,60 @@ const blockSchema = z.discriminatedUnion('type', [
   }),
 ])
 
+const metaSchema = z.object({
+  header: z
+    .object({
+      companyName: z.string(),
+      website: z.string(),
+      address: z.string(),
+      logoUrl: z.string(),
+    })
+    .partial()
+    .optional(),
+  docInfo: z
+    .object({
+      sopNumber: z.string(),
+      dateCreated: z.string(),
+      implementationDate: z.string(),
+      revisionNumber: z.string(),
+      lastUpdated: z.string(),
+      preparedBy: z.string(),
+      showPreparedBy: z.boolean(),
+    })
+    .partial()
+    .optional(),
+  scope: z.string().optional(),
+  orientation: z.enum(['portrait', 'landscape']).optional(),
+  styles: z.record(z.string(), z.object({ fontFamily: z.string(), fontSize: z.number(), textColor: z.string() })).optional(),
+})
+
 const bodySchema = z.object({
   title: z.string().min(1),
   standard: z.string().min(1),
   blocks: z.array(blockSchema).min(1),
+  meta: metaSchema.optional(),
 })
 
-/** Flattens every procedure block's steps, in block order, for the legacy
- *  `steps` column that the simulation engine and detail page still read. */
+/** Flattens procedure blocks into the legacy `steps` string array that the
+ *  simulation engine and detail page still read. Each bullet becomes one
+ *  step, prefixed with its step title when present. */
 function deriveSteps(blocks: z.infer<typeof bodySchema>['blocks']): string[] {
-  return blocks
-    .filter((block): block is Extract<typeof block, { type: 'procedure' }> => block.type === 'procedure')
-    .flatMap((block) => block.steps.map((step) => step.trim()).filter(Boolean))
+  const out: string[] = []
+  for (const block of blocks) {
+    if (block.type !== 'procedure') continue
+    for (const step of block.steps) {
+      const title = step.title.trim()
+      const bullets = step.bullets.map((b) => b.trim()).filter(Boolean)
+      if (bullets.length === 0) {
+        if (title) out.push(title)
+        continue
+      }
+      for (const bullet of bullets) {
+        out.push(title ? `${title}: ${bullet}` : bullet)
+      }
+    }
+  }
+  return out
 }
 
 /**
@@ -74,6 +143,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         version_number: 1,
         standard: body.standard,
         blocks: body.blocks,
+        meta: body.meta ?? {},
         steps,
         published_at: new Date().toISOString(),
       })
