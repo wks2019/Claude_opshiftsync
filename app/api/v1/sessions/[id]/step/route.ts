@@ -7,6 +7,7 @@ import {
   loadDefinition,
   persistStep,
   persistResult,
+  persistCompetencyScores,
 } from '@/modules/simulation-engine/services/session-service'
 import { step } from '@/modules/simulation-engine/engine/state-machine'
 import { accumulate } from '@/modules/simulation-engine/engine/scoring'
@@ -105,6 +106,7 @@ export async function POST(request: Request, { params }: RouteParams): Promise<N
 
     if (outcome.isComplete && outcome.result) {
       await persistResult(sessionId, outcome.result)
+      await persistCompetencyScores(sessionId, userId, outcome.result.finalScore)
     }
 
     // 6. Respond. Choices for the next state are returned without deltas:

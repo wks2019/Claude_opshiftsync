@@ -11,6 +11,7 @@ const PUBLIC_PATHS = [
   '/api/v1/health',
   '/api/v1/certificates/verify',
   '/certificates/verify',
+  '/preview',
 ]
 
 type AppRole = 'guest' | 'staff' | 'manager' | 'administrator'
