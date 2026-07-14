@@ -1,6 +1,6 @@
 -- =============================================================================
 -- CHOSEN WORKFLOW LXP - MODULE PROGRESS ROLLUP
--- Migration: 015_module_progress.sql
+-- Migration: 018_module_progress.sql
 --
 -- lesson_progress tracks per-lesson status only. No rollup existed at
 -- course_module level, so the frontend had no completion percent to render
