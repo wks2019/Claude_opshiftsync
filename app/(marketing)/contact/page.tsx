@@ -87,12 +87,6 @@ export default function ContactPage() {
               >
                 Sign in
               </Link>
-              <Link
-                href="/certificates/verify"
-                className="text-sm text-ink-soft transition-colors hover:text-ink"
-              >
-                Verify a certificate
-              </Link>
             </div>
           </div>
         </div>

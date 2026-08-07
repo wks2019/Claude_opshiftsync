@@ -35,12 +35,6 @@ export function SiteFooter({ wordmark = 'Chosen Workflow' }: SiteFooterProps) {
             <Link href="/login" className="text-sm text-stone transition-colors hover:text-ink">
               Sign in
             </Link>
-            <Link
-              href="/certificates/verify"
-              className="text-sm text-stone transition-colors hover:text-ink"
-            >
-              Verify a certificate
-            </Link>
             <a
               href="mailto:hello@chosenworkflow.com"
               className="text-sm text-stone transition-colors hover:text-ink"

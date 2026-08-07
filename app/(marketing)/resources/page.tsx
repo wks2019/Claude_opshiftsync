@@ -59,7 +59,7 @@ export default function ResourcesPage() {
       </section>
 
       <section className="border-t hairline bg-ink text-paper">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 sm:grid-cols-2 sm:items-center">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 sm:grid-cols-2">
           <div>
             <p className="eyebrow mb-2 text-brass-soft">Certificate verification</p>
             <h2 className="display mb-4 text-2xl text-paper">
@@ -70,13 +70,13 @@ export default function ResourcesPage() {
               their expiry. Useful for inspectors, auditors, and hiring managers.
             </p>
           </div>
-          <div className="sm:justify-self-end">
-            <Link
-              href="/certificates/verify"
-              className="inline-block border border-paper px-6 py-2.5 text-paper transition-colors hover:bg-paper hover:text-ink"
-            >
-              Verify a certificate
-            </Link>
+          <div className="border-t border-paper/20 pt-6 sm:border-l sm:border-t-0 sm:pl-10 sm:pt-0">
+            <p className="eyebrow mb-3 text-brass-soft">How it works</p>
+            <p className="text-sm text-paper/70">
+              Every issued certificate carries a unique verification code. Scan the code on the
+              certificate, or open the verification link printed alongside it, and the result is
+              returned without a login.
+            </p>
           </div>
         </div>
       </section>
