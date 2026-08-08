@@ -10,25 +10,30 @@
 # Lighthouse audits run on the live deploy permalink after publish, so SSR
 # and the ISR home page are audited as real users see them.
 #
+# Every path to audit must be listed explicitly. Supplying an audits array
+# replaces the implicit "/" audit rather than adding to it.
+#
 # Thresholds are deliberately not set yet: establish a baseline over a few
 # deploys first, then set them just under the observed scores.
 #
 # Do not enable fail_deploy_on_score_thresholds here. That switches the
 # plugin to onPostBuild and statically serves the build output, which the
 # plugin documents as unsupported for SSR/ISR sites. This project is both.
+#
+# No output_path: proxy.ts gates every path outside PUBLIC_PATHS, so a
+# published HTML report just redirects to /login. Full reports are on the
+# deploy detail page in the Netlify UI.
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
-  [plugins.inputs]
-    output_path = "reports/lighthouse-home.html"
+  [[plugins.inputs.audits]]
+    path = "/"
 
   [[plugins.inputs.audits]]
     path = "solutions"
-    output_path = "reports/lighthouse-solutions.html"
 
   [[plugins.inputs.audits]]
     path = "pricing"
-    output_path = "reports/lighthouse-pricing.html"
 
 # Production context: env vars set in Netlify UI, never committed.
 [context.production]
