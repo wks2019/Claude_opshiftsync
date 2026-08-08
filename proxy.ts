@@ -4,6 +4,9 @@ import { NextResponse, type NextRequest } from 'next/server'
 const PUBLIC_PATHS = [
   '/',
   '/solutions',
+  '/5star',
+  '/academy',
+  '/ops',
   '/pricing',
   '/about',
   '/resources',
@@ -47,6 +50,10 @@ function isPathAllowedForRole(pathname: string, role: AppRole): boolean {
  * the Data Access Layer. The getUser()/getSession() calls here remain
  * for now since RLS is still the actual authority on every request this
  * redirects toward; tracked as a Phase 1 hardening item, not a blocker.
+ *
+ * NOTE: every public marketing route must appear in PUBLIC_PATHS above or
+ * unauthenticated visitors are redirected to /login. The three product pages
+ * were added when the site moved to a three-product IA.
  */
 export async function proxy(request: NextRequest) {
   const response = NextResponse.next({ request })
