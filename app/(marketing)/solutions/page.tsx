@@ -1,52 +1,26 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { PageHeader } from '@/components/marketing/page-header'
+import { PRODUCTS } from '@/components/marketing/products'
 
 export const metadata: Metadata = {
   title: 'Solutions | Chosen Workflow',
   description:
-    'Courses, decision-based simulations, versioned SOPs, weighted competency scoring, and verifiable certificates for luxury hospitality properties.',
+    'Three products on one platform: 5STAR for guest-facing apps, Hospitality Academy for training and certification, and Hospitality OPS for SOPs and staff testing.',
 }
 
-const CAPABILITIES = [
+const SHARED = [
   {
-    name: 'Courses',
-    body: 'Modules, lessons, and quizzes authored in the admin CMS. Your standards, your language, structured so a new starter can finish a module inside a shift.',
+    name: 'One account per property',
+    body: 'A member of staff signs in once. What they see is decided by their role and their hotel, enforced by Postgres Row Level Security at the database rather than in application code.',
   },
   {
-    name: 'Simulations',
-    body: 'Branching guest scenarios where staff choose full-sentence responses and the guest reacts. Scoring is deterministic, so two people who make the same choices receive the same result.',
+    name: 'One record',
+    body: 'A training result, an SOP version and a guest order all belong to the same property and the same person. Nothing has to be reconciled across systems afterwards.',
   },
   {
-    name: 'SOPs',
-    body: 'Versioned procedures built from six block types: Procedure, Checklist, Table, Rating and Competency, Field and Record, Media. Publish a new version without losing the record of the last one.',
-  },
-  {
-    name: 'Competencies',
-    body: 'Weighted scoring against Forbes Travel Guide and LQA standards, tracked per person and rolled up per module, using the weights your property actually applies.',
-  },
-  {
-    name: 'Certificates',
-    body: 'Issued on completion, with expiry, and publicly verifiable. An inspector or a new employer can confirm a certificate without an account.',
-  },
-  {
-    name: 'Multi-property',
-    body: 'Every record is scoped to a hotel group and enforced by Postgres Row Level Security, at the database, not in application code. One property cannot read another.',
-  },
-] as const
-
-const ROLES = [
-  {
-    role: 'Staff',
-    line: 'Take courses, run simulations, read the SOP that applies to the moment, and see the Audit Ledger for every session.',
-  },
-  {
-    role: 'Manager',
-    line: 'Team rollup across the same four dimensions, an at-risk list, and drill-down into any individual result.',
-  },
-  {
-    role: 'Administrator',
-    line: 'Invite and suspend staff, author content, and set the standards weights that every score in the property is calculated from.',
+    name: 'One standard',
+    body: 'Forbes Travel Guide, LQA and your own procedures are configured once, with your weights, and every score in every product is calculated from them.',
   },
 ] as const
 
@@ -55,20 +29,26 @@ export default function SolutionsPage() {
     <>
       <PageHeader
         eyebrow="Solutions"
-        title="One platform for the standards you are inspected against."
-        standfirst="Chosen Workflow covers the full route from learning a standard to proving it: authored courses, decision-based simulations, versioned SOPs, weighted scoring, and a certificate that can be verified from outside the platform."
+        title="Three products, one platform."
+        standfirst="Serving the guest, training the team, and holding the standard are three different jobs. They are sold separately and they run on the same account, the same roles and the same record."
       />
 
       <section className="border-t hairline">
         <div className="mx-auto max-w-6xl px-6 py-20">
-          <p className="eyebrow mb-2">What is included</p>
-          <h2 className="display mb-14 text-2xl text-ink">Six parts, one record</h2>
-
-          <div className="grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {CAPABILITIES.map((item) => (
-              <div key={item.name} className="border-t hairline pt-6">
-                <h3 className="display mb-3 text-lg text-ink">{item.name}</h3>
-                <p className="text-sm text-stone">{item.body}</p>
+          <div className="grid gap-x-16 gap-y-16 lg:grid-cols-3">
+            {PRODUCTS.map((p) => (
+              <div key={p.slug} className="border-t-2 border-ink pt-6">
+                <p className="eyebrow text-brass-text">{p.kind}</p>
+                <h2 className="display mt-2.5 mb-3 text-2xl text-ink">{p.name}</h2>
+                <p className="display mb-5 text-lg leading-snug text-ink-soft">{p.question}</p>
+                <p className="text-sm text-stone">{p.summary}</p>
+                <p className="eyebrow mt-6">{p.status}</p>
+                <Link
+                  href={`/${p.slug}`}
+                  className="eyebrow mt-6 inline-block border-b border-brass pb-1 pt-2 text-ink transition-colors hover:text-brass-text"
+                >
+                  Read more
+                </Link>
               </div>
             ))}
           </div>
@@ -77,16 +57,16 @@ export default function SolutionsPage() {
 
       <section className="border-t hairline bg-ink text-paper">
         <div className="mx-auto max-w-6xl px-6 py-20">
-          <p className="eyebrow mb-2 text-brass-soft">By role</p>
-          <h2 className="display mb-14 text-2xl text-paper">
-            Three dashboards, built for three different jobs
+          <p className="eyebrow mb-2 text-brass-soft">What they share</p>
+          <h2 className="display mb-14 max-w-[20ch] text-2xl text-paper">
+            Three products is only worth anything if they are actually the same platform
           </h2>
 
           <dl className="grid gap-10 sm:grid-cols-3">
-            {ROLES.map((item) => (
-              <div key={item.role} className="border-t border-paper/20 pt-6">
-                <dt className="eyebrow mb-3 text-brass-soft">{item.role}</dt>
-                <dd className="text-sm text-paper/70">{item.line}</dd>
+            {SHARED.map((item) => (
+              <div key={item.name} className="border-t border-paper/20 pt-6">
+                <dt className="display mb-3 text-lg text-paper">{item.name}</dt>
+                <dd className="text-sm leading-relaxed text-paper/70">{item.body}</dd>
               </div>
             ))}
           </dl>
@@ -96,19 +76,19 @@ export default function SolutionsPage() {
       <section className="border-t hairline">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <h2 className="display max-w-2xl text-2xl text-ink">
-            See a scenario scored against your own weights.
+            Start with one. Add the others when they earn it.
           </h2>
           <p className="mt-4 max-w-xl text-ink-soft">
-            We will run one of your real guest moments through the platform and show you the Audit
-            Ledger it produces.
+            Most properties begin with 5STAR, because it is the one a guest notices in the first
+            week. Nothing obliges you to buy three.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-6">
-            <Link
-              href="/contact"
-              className="border border-ink bg-ink px-6 py-2.5 text-paper transition-colors hover:bg-transparent hover:text-ink"
+            <a
+              href="mailto:hello@chosenworkflow.com?subject=Demo request"
+              className="eyebrow border border-ink bg-ink px-5 py-3 text-paper transition-colors hover:bg-transparent hover:text-ink"
             >
-              Request a demo
-            </Link>
+              Book a demo
+            </a>
             <Link
               href="/pricing"
               className="eyebrow border-b border-brass pb-1 pt-2 text-ink transition-colors hover:text-brass-text"
