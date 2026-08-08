@@ -37,6 +37,7 @@
     "eslint": "10.6.0",
     "eslint-config-next": "16.2.10",
     "vitest": "4.0.5",
-    "@vitejs/plugin-react": "6.0.3"
+    "@vitejs/plugin-react": "6.0.3",
+    "@netlify/plugin-lighthouse": "6.0.4"
   }
 }
