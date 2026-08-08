@@ -56,7 +56,7 @@ export default function ContactPage() {
                   className={
                     item.primary
                       ? 'inline-block border border-ink bg-ink px-6 py-2.5 text-paper transition-colors hover:bg-transparent hover:text-ink'
-                      : 'eyebrow border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass'
+                      : 'eyebrow border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass-text'
                   }
                 >
                   {item.primary ? item.label : `Email about ${item.label.toLowerCase()}`}
