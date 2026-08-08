@@ -67,7 +67,7 @@ export default async function HomePage() {
     <>
       <SiteHeader />
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         {/* Hero */}
         <section className="mx-auto max-w-4xl px-6 pb-20 pt-24 text-center">
           <p className="eyebrow mb-5">{copy.heroEyebrow}</p>
@@ -89,7 +89,7 @@ export default async function HomePage() {
             <div className="grid gap-12 sm:grid-cols-3">
               {STEPS.map((step) => (
                 <div key={step.label} className="border-t hairline pt-6">
-                  <p className="eyebrow mb-3 text-brass">{step.label}</p>
+                  <p className="eyebrow mb-3 text-brass-text">{step.label}</p>
                   <h3 className="display mb-2 text-lg text-ink">{step.title}</h3>
                   <p className="text-sm text-stone">{step.body}</p>
                 </div>
