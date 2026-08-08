@@ -1,0 +1,6 @@
+# Palette and design-system changes require a human reviewer.
+# tests/design-system.test.ts enforces agreement; this enforces intent.
+
+/design-system/  @wks2019
+/app/globals.css @wks2019
+/tests/design-system.test.ts @wks2019
