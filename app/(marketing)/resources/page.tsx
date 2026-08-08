@@ -48,7 +48,7 @@ export default function ResourcesPage() {
                 <p className="mb-5 text-sm text-stone">{item.body}</p>
                 <a
                   href={`mailto:hello@chosenworkflow.com?subject=${encodeURIComponent(`Resource request: ${item.title}`)}`}
-                  className="eyebrow border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass"
+                  className="eyebrow border-b border-brass pb-0.5 text-ink transition-colors hover:text-brass-text"
                 >
                   Request this guide
                 </a>
@@ -93,7 +93,7 @@ export default function ResourcesPage() {
           <div className="mt-10">
             <Link
               href="/contact"
-              className="eyebrow border-b border-brass pb-1 text-ink transition-colors hover:text-brass"
+              className="eyebrow border-b border-brass pb-1 text-ink transition-colors hover:text-brass-text"
             >
               Contact us
             </Link>

@@ -57,7 +57,7 @@ export function SiteNavMobile() {
               href={link.href}
               aria-current={active ? 'page' : undefined}
               className={`border-b hairline px-6 py-3.5 text-sm transition-colors ${
-                active ? 'text-brass' : 'text-ink-soft hover:text-ink'
+                active ? 'text-brass-text' : 'text-ink-soft hover:text-ink'
               }`}
             >
               {link.label}
