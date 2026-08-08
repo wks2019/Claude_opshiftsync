@@ -111,7 +111,7 @@ export default function SolutionsPage() {
             </Link>
             <Link
               href="/pricing"
-              className="eyebrow border-b border-brass pb-1 text-ink transition-colors hover:text-brass"
+              className="eyebrow border-b border-brass pb-1 pt-2 text-ink transition-colors hover:text-brass-text"
             >
               Pricing
             </Link>

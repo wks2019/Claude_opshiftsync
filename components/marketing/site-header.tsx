@@ -5,23 +5,23 @@ import { SiteNav, SiteNavMobile } from './site-nav'
  *  the (marketing) route group. Access is invite-only, so the terminal
  *  action is "Book a demo", never a public sign-up.
  *
- *  The wordmark is a plain <img> rather than next/image on purpose: it is
- *  vector, so there is nothing for the image optimiser to do, and routing it
- *  through /_next/image would cost a round trip to return the same bytes.
- *  alt is empty because the parent link already carries the accessible name. */
+ *  The wordmark is set as text, not an image. It was a 463x105 PNG rendered
+ *  at 56px tall, which meant every 2x display was upscaling it, which is what
+ *  read as blur. Since the page already loads Marcellus through next/font,
+ *  the mark can simply be typeset: sharp at any density, zero bytes, scales
+ *  with the type system, and readable by anything that reads text. The
+ *  "Hospitality training" line that sat under the old logo rendered at roughly
+ *  6px at this size and has been dropped rather than kept as decoration. */
 export function SiteHeader() {
   return (
     <header className="border-b hairline">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-8 px-6 py-6">
-        <Link href="/" aria-label="Chosen Workflow, home" className="shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/wordmark-compact.svg"
-            alt=""
-            width={874}
-            height={134}
-            className="h-8 w-auto"
-          />
+        <Link
+          href="/"
+          aria-label="Chosen Workflow, home"
+          className="display shrink-0 text-2xl leading-none text-ink"
+        >
+          Chosen Workflow
         </Link>
 
         <SiteNav />
