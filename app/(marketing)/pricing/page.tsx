@@ -65,14 +65,14 @@ export default function PricingPage() {
             </div>
 
             <div className="border hairline p-8">
-              <p className="eyebrow mb-2 text-brass">Every deployment</p>
+              <p className="eyebrow mb-2 text-brass-text">Every deployment</p>
               <h2 className="display mb-8 text-lg text-ink">
                 The whole platform, at every price
               </h2>
               <ul className="flex flex-col gap-3">
                 {INCLUDED.map((item) => (
                   <li key={item} className="flex gap-3 text-sm text-ink-soft">
-                    <span aria-hidden="true" className="text-brass">
+                    <span aria-hidden="true" className="text-brass-text">
                       &mdash;
                     </span>
                     <span>{item}</span>
