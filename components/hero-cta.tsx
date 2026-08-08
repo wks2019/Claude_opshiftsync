@@ -6,6 +6,12 @@ import { createClient } from '@/services/supabase/client'
 
 type AuthState = 'loading' | 'authenticated' | 'unauthenticated'
 
+/** Hero call to action. Auth-aware: a signed-in visitor is offered their
+ *  dashboard rather than a demo they do not need.
+ *
+ *  Left-aligned rather than centred, because the hero now runs on an
+ *  asymmetric grid. The reserved height on load prevents the block below
+ *  from jumping once the session resolves. */
 export function HeroCta() {
   const [state, setState] = useState<AuthState>('loading')
 
@@ -17,15 +23,15 @@ export function HeroCta() {
   }, [])
 
   if (state === 'loading') {
-    return <div className="mt-10 h-11" aria-hidden="true" />
+    return <div className="mt-11 h-11" aria-hidden="true" />
   }
 
   if (state === 'authenticated') {
     return (
-      <div className="mt-10 flex items-center justify-center">
+      <div className="mt-11 flex items-center gap-6">
         <Link
           href="/staff"
-          className="border border-ink bg-ink px-6 py-2.5 text-paper transition-colors hover:bg-transparent hover:text-ink"
+          className="eyebrow border border-ink bg-ink px-5 py-3 text-paper transition-colors hover:bg-transparent hover:text-ink"
         >
           Go to your dashboard
         </Link>
@@ -34,18 +40,18 @@ export function HeroCta() {
   }
 
   return (
-    <div className="mt-10 flex items-center justify-center gap-6">
+    <div className="mt-11 flex flex-wrap items-center gap-6">
       <a
         href="mailto:hello@chosenworkflow.com?subject=Demo request"
-        className="border border-ink bg-ink px-6 py-2.5 text-paper transition-colors hover:bg-transparent hover:text-ink"
+        className="eyebrow border border-ink bg-ink px-5 py-3 text-paper transition-colors hover:bg-transparent hover:text-ink"
       >
-        Request a demo
+        Book a demo
       </a>
       <Link
-        href="/login"
-        className="border border-ink px-6 py-2.5 text-ink transition-colors hover:bg-ink hover:text-paper"
+        href="/solutions"
+        className="eyebrow border-b border-transparent pb-1 pt-2 text-brass-text transition-colors hover:border-brass"
       >
-        Sign in
+        See how scoring works
       </Link>
     </div>
   )
