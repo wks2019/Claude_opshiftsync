@@ -10,7 +10,9 @@ function isActive(pathname: string, href: string): boolean {
 }
 
 /** Desktop nav. The active route carries a brass underline, the same
- *  hairline-and-brass language the product uses for state everywhere else. */
+ *  hairline-and-brass language the product uses for state everywhere else.
+ *  pt-2 is there only to lift each link above the 24px target minimum; the
+ *  underline stays where pb-1 puts it. */
 export function SiteNav() {
   const pathname = usePathname()
 
@@ -23,7 +25,7 @@ export function SiteNav() {
             key={link.href}
             href={link.href}
             aria-current={active ? 'page' : undefined}
-            className={`eyebrow border-b pb-1 transition-colors ${
+            className={`eyebrow border-b pb-1 pt-2 transition-colors ${
               active ? 'border-brass text-ink' : 'border-transparent hover:border-brass hover:text-ink'
             }`}
           >
@@ -36,7 +38,10 @@ export function SiteNav() {
 }
 
 /** Mobile nav. Rendered as a native disclosure so the menu costs no
- *  JavaScript, stays keyboard operable, and never blocks first paint. */
+ *  JavaScript, stays keyboard operable, and never blocks first paint.
+ *
+ *  The active row is signalled by weight as well as colour, so it does not
+ *  depend on colour alone the way the desktop underline does not. */
 export function SiteNavMobile() {
   const pathname = usePathname()
 
@@ -57,7 +62,7 @@ export function SiteNavMobile() {
               href={link.href}
               aria-current={active ? 'page' : undefined}
               className={`border-b hairline px-6 py-3.5 text-sm transition-colors ${
-                active ? 'text-brass' : 'text-ink-soft hover:text-ink'
+                active ? 'font-medium text-brass-text' : 'text-ink-soft hover:text-ink'
               }`}
             >
               {link.label}
