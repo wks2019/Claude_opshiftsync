@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { FIVE_STAR_DEMO } from '@/components/marketing/demo'
 import { FiveStarLockup } from '@/components/marketing/five-star-lockup'
 import { OrderQueue } from '@/components/marketing/order-queue'
 
@@ -93,10 +94,73 @@ export default function FiveStarPage() {
               5STAR is the range of apps a guest touches directly. In-room dining ordering is the
               first of them, and it is live.
             </p>
+            <div className="mt-10 flex flex-wrap items-center gap-6">
+              <a
+                href={FIVE_STAR_DEMO.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="eyebrow border border-ink bg-ink px-5 py-3 text-paper transition-colors hover:bg-transparent hover:text-ink"
+              >
+                Open the live demo
+              </a>
+              <a
+                href="mailto:hello@chosenworkflow.com?subject=5STAR demo request"
+                className="eyebrow border-b border-transparent pb-1 pt-2 text-brass-text transition-colors hover:border-brass"
+              >
+                Book a walkthrough
+              </a>
+            </div>
           </div>
           <div>
             <OrderQueue />
             <p className="eyebrow mt-4">The kitchen view. Live orders, as they arrive.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* The live demo. Guest entry checks the room number against the surname
+          on the reservation, so the demo room has to be published alongside the
+          link or a visitor hits a form they cannot get past. */}
+      <section className="border-b hairline bg-paper-raised">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+          <div>
+            <p className="eyebrow mb-2">Try it yourself</p>
+            <h2 className="display max-w-[18ch] text-2xl text-ink">
+              A working property, not a prototype behind a form
+            </h2>
+            <p className="mt-5 max-w-[36ch] text-ink-soft">
+              This is the real application with a demonstration menu loaded. Order something. It
+              will appear in a kitchen queue exactly as it would in yours.
+            </p>
+            <p className="mt-5 max-w-[36ch] text-sm text-stone">
+              Best opened on a phone, which is where every guest will use it.
+            </p>
+          </div>
+
+          <div className="border hairline bg-paper p-7">
+            <p className="eyebrow border-b hairline pb-4">Demonstration guest</p>
+            <dl className="mt-1">
+              <div className="flex items-baseline justify-between border-b hairline py-3.5">
+                <dt className="text-sm text-ink-soft">Property</dt>
+                <dd className="data text-sm text-ink">{FIVE_STAR_DEMO.property}</dd>
+              </div>
+              <div className="flex items-baseline justify-between border-b hairline py-3.5">
+                <dt className="text-sm text-ink-soft">Room number</dt>
+                <dd className="data text-lg text-ink">{FIVE_STAR_DEMO.room}</dd>
+              </div>
+              <div className="flex items-baseline justify-between py-3.5">
+                <dt className="text-sm text-ink-soft">Surname on reservation</dt>
+                <dd className="data text-sm text-ink">{FIVE_STAR_DEMO.surname}</dd>
+              </div>
+            </dl>
+            <a
+              href={FIVE_STAR_DEMO.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="eyebrow mt-6 block border border-ink bg-ink px-5 py-3 text-center text-paper transition-colors hover:bg-transparent hover:text-ink"
+            >
+              Open the live demo
+            </a>
           </div>
         </div>
       </section>
