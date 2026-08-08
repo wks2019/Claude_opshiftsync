@@ -10,4 +10,3 @@ coverage/
 next-env.d.ts
 supabase/.temp/
 .netlify/
-package-lock.json
