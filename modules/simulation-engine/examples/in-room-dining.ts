@@ -2,7 +2,7 @@ import type { SimulationDefinition } from '../engine/types'
 
 /**
  * Full reference simulation: "The Gluten-Free Breakfast".
- * Six decision points across the Forbes/LQA In-Room Dining cycle.
+ * Six decision points across the luxury In-Room Dining service cycle.
  * Optimal path scores exactly 100 in every dimension.
  * The allergy bluff path terminates in an incident.
  */
