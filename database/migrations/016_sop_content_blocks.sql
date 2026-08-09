@@ -8,6 +8,6 @@ alter table sop_versions
   add column if not exists blocks jsonb not null default '[]';
 
 comment on column sop_versions.standard is
-  'FTG/LQA compliance statement for this SOP version. Required going forward, nullable for pre-existing rows.';
+  'Service standards alignment statement for this SOP version. Required going forward, nullable for pre-existing rows.';
 comment on column sop_versions.blocks is
   'Ordered flexible content blocks: procedure, checklist, media. steps remains the flattened procedure text for scoring compatibility.';

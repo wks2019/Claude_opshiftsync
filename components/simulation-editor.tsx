@@ -311,12 +311,12 @@ export function SimulationEditor({
           <div>
             <p className="eyebrow mb-1.5">
               Score impact
-              <FieldHint example="Points this choice earns per dimension, 0 to 25. The best choice in a state should score highest; a poor choice can score 0. Example: a warm, by-the-book recovery might be Forbes 20, LQA 18, SOP 22, EI 20." />
+              <FieldHint example="Points this choice earns per dimension, 0 to 25. The best choice in a state should score highest; a poor choice can score 0. Example: a warm, by-the-book recovery might be Service 20, Guest Experience 18, SOP 22, EI 20." />
             </p>
             <div className="grid grid-cols-4 gap-3">
               {[
-                ['Forbes', forbesDelta, setForbesDelta],
-                ['LQA', lqaDelta, setLqaDelta],
+                ['Service', forbesDelta, setForbesDelta],
+                ['Guest Experience', lqaDelta, setLqaDelta],
                 ['SOP', sopDelta, setSopDelta],
                 ['EI', eiDelta, setEiDelta],
               ].map(([label, value, setter]) => (

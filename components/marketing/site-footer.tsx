@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { IndependenceNotice } from './independence-notice'
 import { NAV_LINKS } from './nav'
 
 interface SiteFooterProps {
@@ -15,7 +16,7 @@ export function SiteFooter({ wordmark = 'Chosen Workflow' }: SiteFooterProps) {
           <div>
             <p className="eyebrow">{wordmark}</p>
             <p className="mt-2 max-w-xs text-sm text-stone">
-              Training built for the standards your inspectors actually measure.
+              Training built for the service standards your property holds itself to.
             </p>
           </div>
 
@@ -44,9 +45,10 @@ export function SiteFooter({ wordmark = 'Chosen Workflow' }: SiteFooterProps) {
           </div>
         </div>
 
-        <p className="eyebrow mt-12 border-t hairline pt-6">
-          &copy; {new Date().getFullYear()} Chosen Workflow
-        </p>
+        <div className="mt-12 border-t hairline pt-6">
+          <IndependenceNotice className="max-w-3xl text-xs leading-relaxed text-stone" />
+          <p className="eyebrow mt-6">&copy; {new Date().getFullYear()} Chosen Workflow</p>
+        </div>
       </div>
     </footer>
   )

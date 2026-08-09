@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { AuditLedger } from '@/components/audit-ledger'
+import { IndependenceNotice } from '@/components/marketing/independence-notice'
 import { PageHeader } from '@/components/marketing/page-header'
 
 export const metadata: Metadata = {
@@ -20,11 +21,11 @@ const CAPABILITIES = [
   },
   {
     name: 'Competencies',
-    body: 'Weighted scoring against Forbes Travel Guide and LQA standards, tracked per person and rolled up per module, using the weights your property actually applies.',
+    body: 'Weighted scoring against five-star service principles and luxury guest experience principles, tracked per person and rolled up per module, using the weights your property actually applies.',
   },
   {
     name: 'Certificates',
-    body: 'Issued on completion, with an expiry date, and publicly verifiable. An inspector or a new employer can confirm a certificate without an account.',
+    body: 'Issued on completion, with an expiry date, and publicly verifiable. A manager or a new employer can confirm a certificate without an account.',
   },
   {
     name: 'Learning paths',
@@ -37,8 +38,8 @@ const CAPABILITIES = [
 ] as const
 
 const DIMENSIONS = [
-  { name: 'Forbes Travel Guide', weight: '35' },
-  { name: 'LQA', weight: '30' },
+  { name: 'Five-Star Service Principles', weight: '35' },
+  { name: 'Luxury Guest Experience', weight: '30' },
   { name: 'Standard Procedure', weight: '25' },
   { name: 'Emotional Intelligence', weight: '10' },
 ] as const
@@ -51,7 +52,7 @@ export default function AcademyPage() {
       <PageHeader
         eyebrow="Hospitality Academy"
         title="Does this person know the standard?"
-        standfirst="Training authored from your own procedures, scenarios that behave like real guests, and a score your inspectors would recognise. Not a completion percentage."
+        standfirst="Training authored from your own procedures, scenarios that behave like real guests, and a score your quality team can act on. Not a completion percentage."
       />
 
       <section className="border-t hairline">
@@ -74,7 +75,7 @@ export default function AcademyPage() {
       <section className="border-t hairline bg-paper-raised">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
           <div>
-            <p className="eyebrow mb-2">The Audit Ledger</p>
+            <p className="eyebrow mb-2">The Score Ledger</p>
             <h2 className="display max-w-[16ch] text-2xl text-ink">
               Four dimensions, weighted the way your property weights them
             </h2>
@@ -151,6 +152,13 @@ export default function AcademyPage() {
               Pricing
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="border-t hairline">
+        <div className="mx-auto max-w-6xl px-6 py-14">
+          <p className="eyebrow mb-3">Independence</p>
+          <IndependenceNotice className="max-w-2xl text-sm text-stone" />
         </div>
       </section>
     </>

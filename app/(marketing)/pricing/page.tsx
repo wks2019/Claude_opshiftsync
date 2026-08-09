@@ -19,7 +19,7 @@ const FACTORS = [
   },
   {
     factor: 'Standards',
-    detail: 'Forbes Travel Guide and LQA are configured as standard. Additional internal standards are scoped separately.',
+    detail: 'Five-star service principles and luxury guest experience principles are configured as standard. Additional internal standards are scoped separately.',
   },
   {
     factor: 'Content',
@@ -94,7 +94,7 @@ export default function PricingPage() {
             Tell us the estate and we will send a number.
           </h2>
           <p className="mt-4 max-w-xl text-paper/70">
-            Properties, approximate headcount, and the standards you are measured against are enough
+            Properties, approximate headcount, and the standards you hold yourself to are enough
             for a first quote.
           </p>
           <div className="mt-10">

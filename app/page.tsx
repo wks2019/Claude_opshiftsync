@@ -49,7 +49,7 @@ const DEMO_FINAL = 96.9
 const FALLBACK = {
   academyTitle: 'Train the moment, not the manual.',
   academySubtitle:
-    'Every scenario is a real guest interaction. Every score is one your inspectors would recognise.',
+    'Every scenario is a real guest interaction. Every score is one your quality team can act on.',
   footerText: 'Chosen Workflow',
 }
 
@@ -196,7 +196,7 @@ export default async function HomePage() {
         </section>
 
         {/* The Academy pitch, which is what the CMS copy has always said. It
-            keeps the Audit Ledger, because measurement is the thread that runs
+            keeps the Score Ledger, because measurement is the thread that runs
             through all three products. */}
         <section className="border-b hairline">
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-24 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
