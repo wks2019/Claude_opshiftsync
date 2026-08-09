@@ -20,7 +20,7 @@ const BLOCKS = [
 const TESTING = [
   {
     name: 'Question bank',
-    body: 'Multiple choice, multiple answer and fill-in-the-blank, filed by section: menu knowledge, minibar, LQA standards, Forbes standards.',
+    body: 'Multiple choice, multiple answer and fill-in-the-blank, filed by section: menu knowledge, minibar, luxury guest experience principles, five-star service principles.',
   },
   {
     name: 'Departmental',
@@ -40,7 +40,7 @@ const VERSIONING = [
   'A published version is never overwritten. The previous one stays readable.',
   'Every change records who made it and when.',
   'Staff always read the current published version, never a draft.',
-  'An inspector can be shown what the procedure said on a given date.',
+  'A reviewer can be shown what the procedure said on a given date.',
 ] as const
 
 export default function OpsPage() {
