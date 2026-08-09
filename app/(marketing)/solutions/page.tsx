@@ -20,7 +20,7 @@ const SHARED = [
   },
   {
     name: 'One standard',
-    body: 'Forbes Travel Guide, LQA and your own procedures are configured once, with your weights, and every score in every product is calculated from them.',
+    body: 'Five-star service principles, luxury guest experience principles and your own procedures are configured once, with your weights, and every score in every product is calculated from them.',
   },
 ] as const
 
