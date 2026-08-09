@@ -16,7 +16,7 @@ create table website_content (
   is_singleton boolean not null default true unique,
   hero_eyebrow text not null default 'For luxury hospitality',
   hero_title text not null default 'Train the moment, not the manual.',
-  hero_subtitle text not null default 'A learning and simulation platform built on Forbes Travel Guide and LQA standards. Every scenario is a real guest interaction. Every score is one your inspectors would recognise.',
+  hero_subtitle text not null default 'A learning and simulation platform built on five-star service principles and luxury guest experience principles. Every scenario is a real guest interaction. Every score is one your quality team can act on.',
   footer_text text not null default 'Chosen Workflow',
   updated_at timestamptz not null default now()
 );
