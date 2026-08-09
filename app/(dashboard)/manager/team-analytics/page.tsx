@@ -18,7 +18,7 @@ export default async function ManagerAnalyticsPage() {
     { label: 'Team members with activity', value: rows.length },
     { label: 'Simulations completed', value: totalCompleted },
     { label: 'Average composite score', value: average('avg_final_score')?.toFixed(1) ?? '—' },
-    { label: 'Average Forbes score', value: average('avg_forbes_score')?.toFixed(1) ?? '—' },
+    { label: 'Average service score', value: average('avg_forbes_score')?.toFixed(1) ?? '—' },
   ]
 
   return (

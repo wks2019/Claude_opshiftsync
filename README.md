@@ -2,8 +2,9 @@
 
 Multi-tenant learning experience platform (LXP) for luxury hospitality
 properties. Staff, managers, and admins across hotel groups train against
-Forbes Travel Guide and LQA standards through courses, SOPs, and
-decision-based simulations, with every result scored and auditable.
+five-star service principles and luxury guest experience principles through
+courses, SOPs, and decision-based simulations, with every result scored and
+retained.
 
 **Live:** `chosenworkflow.netlify.app`
 
@@ -24,12 +25,23 @@ decision-based simulations, with every result scored and auditable.
   Field/Record, Media)
 - **Certificates:** issued on completion, publicly verifiable at
   `/certificates/verify`, with expiry support
-- **Competencies:** weighted scoring against Forbes and LQA standards,
-  tracked per user and rolled up per module
+- **Competencies:** weighted scoring against five-star service principles
+  and luxury guest experience principles, tracked per user and rolled up per
+  module
 - **Roles:** staff, manager, administrator, each with a dedicated
   dashboard under `app/(dashboard)/`
 - **Multi-tenancy:** every table scoped to `hotel_group_id`, enforced by
   Postgres Row Level Security, not application logic
+
+## Independence
+
+Chosen Workflow is an independent luxury hospitality training tool. It is
+not affiliated with, endorsed by, certified by or approved by Forbes Travel
+Guide, LQA, Leading Quality Assurance or any third-party inspection body.
+Scoring dimensions reflect the platform owner's own method. The disclaimer
+shown in the product lives in a single place,
+`components/marketing/independence-notice.tsx`, and must not be paraphrased
+or duplicated inline.
 
 ## Structure
 
@@ -39,7 +51,7 @@ app/api/v1                              backend API routes
 app/certificates/verify                 public certificate verification
 modules/simulation-engine               simulation player and scoring
 services/                               Supabase service layer (CRUD)
-database/migrations/                    15 migrations, run manually
+database/migrations/                    19 migrations, run manually
 types/database.ts                       hand-maintained Supabase types
 ```
 

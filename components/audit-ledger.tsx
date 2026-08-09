@@ -6,18 +6,22 @@ interface AuditLedgerProps {
   compact?: boolean
 }
 
+/** Dimension labels are the platform's own vocabulary. The object keys still
+ *  read forbesScore / lqaScore because they mirror the database columns and
+ *  the engine's ScoreDeltas shape; renaming those is a coordinated schema and
+ *  code change, tracked separately. Nothing here is user-visible. */
 const DIMENSIONS = [
-  { key: 'forbesScore', label: 'Forbes Travel Guide', weight: '35' },
-  { key: 'lqaScore', label: 'LQA', weight: '30' },
+  { key: 'forbesScore', label: 'Five-Star Service Principles', weight: '35' },
+  { key: 'lqaScore', label: 'Luxury Guest Experience', weight: '30' },
   { key: 'sopScore', label: 'Standard Procedure', weight: '25' },
   { key: 'eiScore', label: 'Emotional Intelligence', weight: '10' },
 ] as const
 
 /**
- * The Audit Ledger. Every score in the product renders through this
+ * The Score Ledger. Every score in the product renders through this
  * component: simulation results, staff dashboards, manager rollups.
  * Four hairline rules with brass fills, mirroring a physical
- * standards inspection sheet.
+ * service standards scoring sheet.
  */
 export function AuditLedger({ result, finalScore, compact = false }: AuditLedgerProps) {
   return (

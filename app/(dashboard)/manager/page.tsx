@@ -19,7 +19,7 @@ export default async function ManagerTeamPage() {
       {!error && (!rollup || rollup.length === 0) && (
         <p className="text-stone">
           No completed simulations yet. Once your team plays through a scenario, their scores
-          appear here as an Audit Ledger.
+          appear here as a Score Ledger.
         </p>
       )}
 
