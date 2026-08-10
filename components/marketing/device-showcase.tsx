@@ -16,14 +16,18 @@ import Image from 'next/image'
  *  The tablet is inset from the left so the phone has somewhere to sit: at
  *  full width the phone overlapped the tablet's own header and made both
  *  unreadable. Phone width is held low deliberately, since the phone crop is
- *  the taller aspect and will dominate the composition if given more. */
+ *  the taller aspect and will dominate the composition if given more.
+ *
+ *  Alt text describes only what is inside the crop. If either screenshot is
+ *  ever re-shot at a different height, check the description still matches
+ *  what is visible. */
 export function DeviceShowcase() {
   return (
     <div className="relative">
       <div className="ml-14 overflow-hidden rounded-[1.75rem] border border-ink/15 shadow-[0_24px_60px_-24px_rgb(16_32_27_/_0.35)] sm:ml-20">
         <Image
           src="/images/5star/guest-menu-tablet.png"
-          alt="The 5STAR menu, All Day service, Starters category, showing the Oysters dish at £34.00"
+          alt="The 5STAR in-room dining menu on a tablet, signed in to Room 204, with the All Day service period selected and the category row beneath it"
           width={834}
           height={700}
           className="h-auto w-full"
@@ -34,7 +38,7 @@ export function DeviceShowcase() {
       <div className="absolute -bottom-10 left-0 w-[26%] min-w-[7rem] overflow-hidden rounded-[1.25rem] border-4 border-ink bg-ink shadow-[0_20px_44px_-16px_rgb(16_32_27_/_0.45)] sm:w-[24%]">
         <Image
           src="/images/5star/guest-menu-phone.png"
-          alt="The same menu on a phone, signed in as Room 204, Whitmore"
+          alt="The same menu on a phone, greeting the guest by surname and showing the same service periods and categories"
           width={390}
           height={610}
           className="h-auto w-full"
