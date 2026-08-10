@@ -18,7 +18,10 @@ function isActive(pathname: string, href: string): boolean {
  *  wordmark, six nav links, Sign in and Book a demo. At md (768px) only
  *  720px is available inside the px-6 gutters, so the row overflowed the
  *  viewport and pushed a horizontal scrollbar onto every page between 768
- *  and about 860. Tablet portrait therefore keeps the mobile disclosure. */
+ *  and about 860. Tablet portrait therefore keeps the mobile disclosure.
+ *
+ *  Links are whitespace-nowrap so wider-than-expected font rendering can
+ *  never fold a label onto two lines. See the note in site-header.tsx. */
 export function SiteNav() {
   const pathname = usePathname()
 
@@ -31,7 +34,7 @@ export function SiteNav() {
             key={link.href}
             href={link.href}
             aria-current={active ? 'page' : undefined}
-            className={`eyebrow border-b pb-1 pt-2 transition-colors ${
+            className={`eyebrow whitespace-nowrap border-b pb-1 pt-2 transition-colors ${
               active ? 'border-brass text-ink' : 'border-transparent hover:border-brass hover:text-ink'
             }`}
           >
