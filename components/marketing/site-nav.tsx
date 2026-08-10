@@ -12,12 +12,18 @@ function isActive(pathname: string, href: string): boolean {
 /** Desktop nav. The active route carries a brass underline, the same
  *  hairline-and-brass language the product uses for state everywhere else.
  *  pt-2 is there only to lift each link above the 24px target minimum; the
- *  underline stays where pb-1 puts it. */
+ *  underline stays where pb-1 puts it.
+ *
+ *  Breakpoint is lg, not md. The masthead row needs roughly 840px for the
+ *  wordmark, six nav links, Sign in and Book a demo. At md (768px) only
+ *  720px is available inside the px-6 gutters, so the row overflowed the
+ *  viewport and pushed a horizontal scrollbar onto every page between 768
+ *  and about 860. Tablet portrait therefore keeps the mobile disclosure. */
 export function SiteNav() {
   const pathname = usePathname()
 
   return (
-    <nav aria-label="Primary" className="hidden items-center gap-7 md:flex">
+    <nav aria-label="Primary" className="hidden items-center gap-7 lg:flex">
       {NAV_LINKS.map((link) => {
         const active = isActive(pathname, link.href)
         return (
@@ -41,12 +47,15 @@ export function SiteNav() {
  *  JavaScript, stays keyboard operable, and never blocks first paint.
  *
  *  The active row is signalled by weight as well as colour, so it does not
- *  depend on colour alone the way the desktop underline does not. */
+ *  depend on colour alone the way the desktop underline does not.
+ *
+ *  Must stay the exact inverse of SiteNav's breakpoint. If these two drift
+ *  apart the header either shows both navs or neither. */
 export function SiteNavMobile() {
   const pathname = usePathname()
 
   return (
-    <details className="group border-t hairline md:hidden">
+    <details className="group border-t hairline lg:hidden">
       <summary className="eyebrow flex cursor-pointer list-none items-center justify-between px-6 py-4 text-ink [&::-webkit-details-marker]:hidden">
         <span>Menu</span>
         <span aria-hidden="true" className="transition-transform group-open:rotate-45">
